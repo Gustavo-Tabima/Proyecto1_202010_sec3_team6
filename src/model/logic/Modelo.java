@@ -1,16 +1,10 @@
 package model.logic;
 
-import java.io.FileReader;
-
-import com.google.gson.stream.JsonReader;
-
-
+import model.data_structures.ArregloDinamico;
 import model.data_structures.Cola;
-
+import model.data_structures.IArregloDinamico;
 import model.data_structures.Icola;
-
 import model.data_structures.Nodo;
-
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -26,7 +20,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 import model.logic.Comparendo;
-
+import model.data_structures.Geo;
 
 /**
  * Definicion del modelo del mundo
@@ -34,21 +28,24 @@ import model.logic.Comparendo;
  */
 public class Modelo {
 
+	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
+	//	public static String PATH = "./data/comparendos_dei_2018.geojson";
 	/**
-	 * Constante que representa los datos a buscar
+	 * Atributos del modelo del mundo
 	 */
-	public static String PATH = "./data/comparendos_dei_2018.geojson";
+	private IArregloDinamico datos;
 
-	/**
-	 * Atributos del modelo del Mundo
-	 */
-	private Icola datosCola;
+	private Icola datosConCola;
+
+
+
+
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public Modelo()
 	{
-		datosCola = new Cola<Comparendo>();
+		datos = new ArregloDinamico(7);
 	}
 
 	/**
@@ -57,7 +54,7 @@ public class Modelo {
 	 */
 	public Modelo(int capacidad)
 	{
-		datosCola = new Cola<Comparendo>();
+		datos = new ArregloDinamico(capacidad);
 	}
 
 	/**
@@ -66,7 +63,7 @@ public class Modelo {
 	 */
 	public int darTamano()
 	{
-	return datosCola.darTamano();
+		return datos.darTamano();
 	}
 
 	/**
@@ -75,7 +72,65 @@ public class Modelo {
 	 */
 	public void agregar(String dato)
 	{	
-		datosCola.instertar(dato);
+		datos.agregar(dato);
+	}
+
+	/**Requerimiento para ver el cluster con elementos más seguidos
+	 * 
+	 */
+	public String agrupar() {
+		String agrupados = "";
+		String vacio="";
+		ArrayList<String> tipos = new ArrayList<>();
+		ArrayList<String> Strings =new ArrayList<>();
+		ArrayList contadores = new ArrayList<>();
+		int conta=0;
+		Cola copia = cargarDatosCola();
+		while (copia.sacar()!=null) {
+			String x = ((Comparendo) copia.sacar()).darInfraccion();
+			if (tipos.contains(x)==false) {
+				tipos.add(x);
+			}
+		}
+		
+		for (int i = 0; i < tipos.size(); i++) {
+			while (cargarDatosCola().darPrimero()!=null) {
+				String tipo = cargarDatosCola().sacar().darInfraccion();
+				
+
+				if (tipo.equals(tipos.get(i))) {
+					conta++;
+					vacio=vacio+tipo;
+					
+					
+					
+				}
+				Strings.add(vacio);
+				contadores.add(conta);
+			}
+			
+			
+		}
+		int mayor=0;
+		for (int i = 0; i < contadores.size(); i++) {
+			int lel = (int) contadores.get(i);
+			if (mayor <lel ) {
+				mayor=lel;
+			}
+			
+			
+			
+			
+			
+		}
+	
+		
+		
+			
+		
+
+		//retorna el String con el grupo de infracciones seguidas más grande		
+		return Strings.get(mayor);
 	}
 
 	/**
@@ -85,7 +140,7 @@ public class Modelo {
 	 */
 	public String buscar(String dato)
 	{
-		return (String) datosCola.buscarElemento(dato);
+		return datos.buscar(dato);
 	}
 
 	/**
@@ -93,17 +148,11 @@ public class Modelo {
 	 * @param dato Dato a eliminar
 	 * @return dato eliminado
 	 */
-	public void eliminar(String dato)
+	public String eliminar(String dato)
 	{
-		if (!datosCola.estaVacio()) {
-			if(datosCola.darPrimero().equals(dato)) {
-				datosCola.eliminar();
-			}
-			else {
-				
-			}
-		}
+		return datos.eliminar(dato);
 	}
+
 
 	public Cola<Comparendo> cargarDatosCola() {
 

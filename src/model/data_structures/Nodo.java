@@ -1,16 +1,18 @@
 package model.data_structures;
 
+import model.logic.Comparendo;
+
 public class Nodo <K>  {
 
 	private Nodo <K> siguiente;
 	
 
-	private K datos;
+	private Comparendo datos;
 
-	public Nodo(K pDatos) {
+	public Nodo(Comparendo pDatos) {
 		datos = pDatos;
 	}
-	public K darComparendo() {
+	public Comparendo darComparendo() {
 		return datos;
 	}
 
@@ -27,7 +29,7 @@ public class Nodo <K>  {
 
 	
 	
-	public void setDato(K dato) 
+	public void setDato(Comparendo dato) 
 	{
 		datos = dato;
 	}

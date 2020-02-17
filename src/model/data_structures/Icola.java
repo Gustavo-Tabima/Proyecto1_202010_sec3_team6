@@ -2,7 +2,7 @@ package model.data_structures;
 
 public interface Icola <K> {
 
-	public void instertar(K pnuevo);
+public void instertar(K pnuevo);
 	
 	public K darPrimero();
 	
@@ -18,4 +18,6 @@ public interface Icola <K> {
 
 	public void eliminar();
 	public Nodo darInicial();
+	
+	
 }

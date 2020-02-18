@@ -150,6 +150,15 @@ public class Cola <K> implements Icola{
 	public K darFinal() {
 		return (K) termino.darComparendo();
 	}
+
+
+
+	/**
+	 * Consulta y devuelve el primer comparendo que encuentre con la localidad buscada.
+	 * @param Plocalidad localidad que debe tner el comparendo
+	 *  * @return El primer comparendo que cumpla la condicion
+	 */
+
 	public Comparendo consultarPrimerComparendoPorLocalidad(K Plocalidad) {
 		Nodo act =  inicio;
 
@@ -168,21 +177,22 @@ public class Cola <K> implements Icola{
 	}
 
 
-	//registrados  en  el  archivo dadaunaFECHA_HORA.
-	//Los resultados debenser presentados de manera ordenada, para este caso de mayor a menor por el  códigoINFRACCION. 
-	//Mostrar  los  resultados  indicando  para  cada comparendo  su código OBJECTID, FECHA_HORA, INFRACCION,   CLASE_VEHI,   TIPO_SERVI,   LOCALIDAD.
-	//Incluir el total de comparendos de la consulta
+	/**
+	 * Consulta y devuelve los comparendos que encuentre segun una fecha de manera ordenada(mayor a menor segun codigo de infraccion).
+	 * @param Pfecha Fecha que deben tener los comparendos
+	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
+	 */
 
 	public K consultarComparendosFecha(K Pfecha) {
 		arrayComparendofecha(Pfecha);
-		organizador(Pfecha);
+		ordenadorArrayComparendoFecha(Pfecha);
 		String resp ="";
 		for (int i = 0; i < arrayComparendofecha(Pfecha).size(); i++) {
 			Comparendo act = arrayComparendofecha(Pfecha).get(i);
 			resp=resp + act.darObjectId()+"," + act.darFecha()+act.darInfraccion()+"," +act.darClaseVehi()+"," +act.darTipoServi()+"," +act.darLocalidad()+"\n";
-			
+
 		}
-		
+
 		resp=resp+"total de comparendo segun consulta: "+arrayComparendofecha(Pfecha).size();
 
 
@@ -192,15 +202,61 @@ public class Cola <K> implements Icola{
 		return (K) resp;
 
 	}
-
+	
+	
+	
+	/**
+	 * Comparar  los comparendos,por  cada  código de infraccion,
+	 * en dos  fechas dadas. La  comparación solicitada consiste  en mostrar  el total de  comparendos  de  cada  código   para cada fecha.
+	 * @param fecha1  Fecha que deben tener los comparendos
+	 * * @param fecha2  Fecha que deben tener los comparendos
+	 *  * @return total de comparendos segun fecha
+	 */
 	public K comparaComparendoCodigoSegunFechas(K fecha1, K fecha2) {
 		return null;
 
 	}
+	
+	
+	/**
+	 * Consulta y devuelve el primer comparendo que encuentre con el codigo de infraccion dado por parametro.
+	 * @param Pinfraccion infraccion que debe tener el comparendo
+	 *  * @return El primer comparendo que cumpla la condicion
+	 */
+	
 	public K consultarPrimerComparendoPorInfraccion(K Pinfraccion) {
 		return null;
 
 	}
+	
+	
+	/**
+	 * Consulta y devuelve los comparendos que encuentre segun un codigo de infraccion de manera ordenada(menor a mayor segun fecha).
+	 * @param pInfrac codigo de infraccion que deben tener los comparendos
+	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
+	 */
+	
+	public K consultarComparendosCodigoInfracc(K pInfrac) {
+		return pInfrac;
+		
+	}
+	
+	/**
+	 * Comparar  los comparendos,por  cada  código de infraccion,en segun su tipo de servicio (particular o publico). 
+	 * La  comparación solicitada consiste  en mostrar  el total de  comparendos  de  cada  código   para cada tipo de servicio.
+	 *   @return total de comparendos segun tipo de servicio
+	 */
+	
+	public K compararComparendoCodigoSegunTipoServi() {
+		return null;
+		
+	}
+
+	/**
+	 * Consulta y devuelve  una listalos comparendos que encuentre segun una fecha
+	 * @param Pfecha Fecha que deben tener los comparendos
+	 *  * @return lista de comaparendos
+	 */
 
 	public ArrayList<Comparendo> arrayComparendofecha(K Pfecha) {
 		Nodo act =  inicio;
@@ -221,7 +277,14 @@ public class Cola <K> implements Icola{
 
 	}
 
-	public void organizador(K Pfecha) {
+
+	/**
+	 * Consulta   una lista  de comparendos y la ordena segun codigo de infraccion de mayor a mneor.
+	 * @param Pfecha Fecha que deben tener los comparendos
+	 *  * pos: lista de comaparendos ordenada de mayor a menor segun codigo de infraccion
+	 */
+
+	public void ordenadorArrayComparendoFecha(K Pfecha) {
 		;
 		int contador=0;
 		for (int i = 0; i < arrayComparendofecha(Pfecha).size() ; i++) {
@@ -234,13 +297,89 @@ public class Cola <K> implements Icola{
 
 			}
 			if (contador!=0) {
-				organizador(Pfecha);
+				ordenadorArrayComparendoFecha(Pfecha);
 			}
 
 
 		}
 	}
 
+	/**
+	 * Consulta y devuelve  una listalos comparendos que encuentre segun codigo de infraccion
+	 * @param pInfracc codigo de infraccion que deben tener los comparendos
+	 *  * @return lista de comaparendos
+	 */
+	public ArrayList<Comparendo> arrayComparendoInfracc(K pInfracc) {
+		Nodo act =  inicio;
+		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
+		String resp= "";
+		while (act!=null) {
+			K X =(K) act.darComparendo().darInfraccion();
+			if (X.equals(pInfracc)) {
+				comparendoQueConcuerdan.add(act.darComparendo());
 
+
+			}
+			act=act.darSiguente();
+
+		}
+
+		return comparendoQueConcuerdan;
+
+	}
+	
+	
+	
+	/**
+	 * Consulta   una lista  de comparendos y la ordena segun fecha de menor a mayor.
+	 * @param Pfecha Fecha que deben tener los comparendos
+	 *  * pos: lista de comaparendos ordenada de mayor a menor segun codigo de infraccion
+	 */
+	
+	public void ordenadorComparedoInfracc(K pInfracc){
+		
+	}
+	
+	/**
+	 * Muestra el numero de comparendos por cada código de infraccion en una localidad dada,
+	 *  para un periodo de tiempo dado por: fecha inicial y final.
+	 *  Los  resultados  deben  ser  presentados  de  manera  alfabeticamente ordenada.
+	 * @param fechaInicial Fecha inicial del periodo de tiempo.
+	 * @param fechaFinal Fecha final del periodo de tiempo
+	 * @param pLocalidad Localidad dada por parametro
+	 * @return numero de comparendo dados por localidad en un peiodo de tiempo
+	 */
+	
+	public K NumerodeComparendosCodigoSegunLocalidad(K pLocalidad, K fechaInicial, K fechaFinal ) {
+		return null;
+		
+	}
+	
+	
+	/**
+	 * Muestra numero dado de codigos de infraccion mas frecuente en un periodo de tiempo dado,
+	 *  Los  resultados  deben  ser  presentados  en formato de tabla
+	 * @param fechaInicial Fecha inicial del periodo de tiempo.
+	 * @param fechaFinal Fecha final del periodo de tiempo
+	 * @param N Numero de codigos que se va a buscar.
+	 * @return numero de comparendo mas frecuentes en un peiodo de tiempo
+	 */
+	public K consultarNComparendosMayoresSegunPeriodoFecha(K N ,K fechaInicial, K fechaFinal) {
+		return N;
+		
+	}
+	/**
+	 * Genera una gráfica ASCII (Histograma) que muestra el número total de comparendos por  cada  LOCALIDAD ,
+	 * representados  por  un  String  de  caracteres  ‘*’. 
+	 * Los  nombres  de  las localidades deben aparecer alfabéticamente y deben justificarse a 16 caracteres.
+	 * Cada ‘*’corresponde   a   50   comparendos. 
+	 * Para   una   localidad,   si   su   residuo del   total   de comparendos al  dividir  entre  50  es  un  número  mayor  a  0,
+	 *   este  residuo  corresponde también a  un ‘*’.
+	 * @return gráfica ASCII
+	 */
+	public K GeneradorHistrogramaASCIINUmTotalSegunLocalidad() {
+		return null;
+		
+	}
 
 }

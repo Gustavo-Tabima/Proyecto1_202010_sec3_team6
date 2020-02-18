@@ -16,18 +16,18 @@ import model.data_structures.Nodo;
 public class TestCola<K> {
 	private Cola<K> colaPrueba;
 
-	
+
 	@Before 
 	public void SetUp()
 	{
 		colaPrueba = new Cola<K>();
-		
+
 		colaPrueba.instertar(3);
 		colaPrueba.instertar(1);
 	}
 
 	@Before 
-	
+
 	@Test
 	public void testEliminar()
 	{
@@ -39,8 +39,8 @@ public class TestCola<K> {
 		assertEquals("NO elimina correctamente",colaPrueba.darTamano(),1);
 
 	}
-	
-	
+
+
 	@Test
 	public void  testInsertar() {
 
@@ -75,6 +75,7 @@ public class TestCola<K> {
 
 		;
 	}
+
 	@Test
 	public void testdarPrimero()
 	{
@@ -90,5 +91,136 @@ public class TestCola<K> {
 	}
 
 
+	@Test
+	public void testConsultarPrimerComparendoPorLocalidad()
+	{
 
+
+
+	}
+
+	@Test
+	public void testConsultarComparendosFecha()
+	{
+
+
+
+	}
+
+
+	@Test
+	public void testComparaComparendoCodigoSegunFechas()
+	{
+
+
+
+	}
+	@Test
+	public void testConsultarPrimerComparendoPorInfraccion()
+	{
+
+
+
+
+	}
+
+	@Test
+	public void testconsultarComparendosCodigoInfracc()
+	{
+		SetUp();
+
+
+		colaPrueba.darPrimero();
+
+		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
+
+
+
+	}
+
+	@Test
+	public void testcompararComparendoCodigoSegunTipoServi()
+	{
+		SetUp();
+
+
+		colaPrueba.darPrimero();
+
+		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
+
+
+
+	}
+	@Test
+	public void testarrayComparendofecha()
+	{
+		SetUp();
+
+
+		colaPrueba.darPrimero();
+
+		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
+
+
+
+	}
+	@Test
+	public void testordenadorArrayComparendoFecha()
+	{
+		SetUp();
+
+
+		colaPrueba.darPrimero();
+
+		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
+
+
+
+	}
+	@Test
+	public void testarrayComparendoInfracc()
+	{
+		SetUp();
+
+
+		colaPrueba.darPrimero();
+
+		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
+
+
+
+	}
+	
+	
+
+	
+	public void testordenadorComparedoInfracc()
+	{
+
+
+
+	}
+	
+	public void testNumerodeComparendosCodigoSegunLocalidad()
+	{
+
+
+
+	}
+	
+	public void consultarNComparendosMayoresSegunPeriodoFecha()
+	{
+
+
+
+	}
+	
+	public void GeneradorHistrogramaASCIINUmTotalSegunLocalidad()
+	{
+
+
+
+	}
+	
+	
 }

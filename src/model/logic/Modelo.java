@@ -1,10 +1,16 @@
 package model.logic;
 
-import model.data_structures.ArregloDinamico;
+import java.io.FileReader;
+
+import com.google.gson.stream.JsonReader;
+
+
 import model.data_structures.Cola;
-import model.data_structures.IArregloDinamico;
+
 import model.data_structures.Icola;
+
 import model.data_structures.Nodo;
+
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -20,7 +26,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 import model.logic.Comparendo;
-import model.data_structures.Geo;
+
 
 /**
  * Definicion del modelo del mundo
@@ -28,24 +34,21 @@ import model.data_structures.Geo;
  */
 public class Modelo {
 
-	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
-	//	public static String PATH = "./data/comparendos_dei_2018.geojson";
 	/**
-	 * Atributos del modelo del mundo
+	 * Constante que representa los datos a buscar
 	 */
-	private IArregloDinamico datos;
+	public static String PATH = "./data/comparendos_dei_2018.geojson";
 
-	private Icola datosConCola;
-
-
-
-
+	/**
+	 * Atributos del modelo del Mundo
+	 */
+	private Icola datosCola;
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public Modelo()
 	{
-		datos = new ArregloDinamico(7);
+		datosCola = new Cola<Comparendo>();
 	}
 
 	/**
@@ -54,7 +57,7 @@ public class Modelo {
 	 */
 	public Modelo(int capacidad)
 	{
-		datos = new ArregloDinamico(capacidad);
+		datosCola = new Cola<Comparendo>();
 	}
 
 	/**
@@ -63,7 +66,7 @@ public class Modelo {
 	 */
 	public int darTamano()
 	{
-		return datos.darTamano();
+		return datosCola.darTamano();
 	}
 
 	/**
@@ -72,65 +75,7 @@ public class Modelo {
 	 */
 	public void agregar(String dato)
 	{	
-		datos.agregar(dato);
-	}
-
-	/**Requerimiento para ver el cluster con elementos más seguidos
-	 * 
-	 */
-	public String agrupar() {
-		String agrupados = "";
-		String vacio="";
-		ArrayList<String> tipos = new ArrayList<>();
-		ArrayList<String> Strings =new ArrayList<>();
-		ArrayList contadores = new ArrayList<>();
-		int conta=0;
-		Cola copia = cargarDatosCola();
-		while (copia.sacar()!=null) {
-			String x = ((Comparendo) copia.sacar()).darInfraccion();
-			if (tipos.contains(x)==false) {
-				tipos.add(x);
-			}
-		}
-		
-		for (int i = 0; i < tipos.size(); i++) {
-			while (cargarDatosCola().darPrimero()!=null) {
-				String tipo = cargarDatosCola().sacar().darInfraccion();
-				
-
-				if (tipo.equals(tipos.get(i))) {
-					conta++;
-					vacio=vacio+tipo;
-					
-					
-					
-				}
-				Strings.add(vacio);
-				contadores.add(conta);
-			}
-			
-			
-		}
-		int mayor=0;
-		for (int i = 0; i < contadores.size(); i++) {
-			int lel = (int) contadores.get(i);
-			if (mayor <lel ) {
-				mayor=lel;
-			}
-			
-			
-			
-			
-			
-		}
-	
-		
-		
-			
-		
-
-		//retorna el String con el grupo de infracciones seguidas más grande		
-		return Strings.get(mayor);
+		datosCola.instertar(dato);
 	}
 
 	/**
@@ -140,17 +85,27 @@ public class Modelo {
 	 */
 	public String buscar(String dato)
 	{
-		return datos.buscar(dato);
+		return (String) datosCola.buscarElemento(dato);
 	}
 
 	/**
 	 * Requerimiento eliminar dato
 	 * @param dato Dato a eliminar
-	 * @return dato eliminado
 	 */
 	public String eliminar(String dato)
-	{
-		return datos.eliminar(dato);
+	{ 	String resp = null;
+	if (!datosCola.estaVacio()) {
+
+		if(datosCola.darPrimero().equals(dato)) {
+			datosCola.eliminar();
+			resp ="se elimino";
+		}
+		else {
+			resp="No se pido elminar";
+
+		}
+	}
+	return resp;
 	}
 
 
@@ -196,7 +151,31 @@ public class Modelo {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		return datosCola;	
+		return datosCola;	}
+	
+	
+	/** recorre los datos cargados en la cola y da el numero total de cuantos hay
+	 * @return numero de comparendos en la cola
+	 */
+	public int totalComparendosCola() {
+		return 0;
 
+	}
+	/** recorre los datos cargados en la cola y da el comparendo con mayor object ID
+	 * @return retorna el comparendo con mayor object id
+	 */
+	public String comparendoMayorObId() {
+		return null;
+	}
+	
+	
+	/** analiza los datos de la cola y da la zona min-max
+	 * La zona Minimax de los comparendos es definida como límites inferior y superior de  latitud  y  longitud  en  todo  el  archivo.
+	 * El  Minimax  se  define  como  una  zona rectangular  con  dos  puntos  extremos:(la menor  latitud, la menor  longitud) 
+	 *  y  (la mayor latitud, la mayor longitud).
+	 * @return retorna la zona min max
+	 */
+	public String zonaMinmax() {
+		return "";
 	}
 }

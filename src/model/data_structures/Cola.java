@@ -369,8 +369,7 @@ public class Cola <K> implements Icola{
 		
 	}
 	/**
-	 * Genera una gráfica ASCII (Histograma) que muestra el número total de comparendos por  cada  LOCALIDAD ,
-	 * representados  por  un  String  de  caracteres  ‘*’. 
+	 * Genera una gráfica ASCII (Histograma) que muestra el número total de comparendos por  cada  LOCALIDAD ,representados  por  un  String  de  caracteres  ‘*’. 
 	 * Los  nombres  de  las localidades deben aparecer alfabéticamente y deben justificarse a 16 caracteres.
 	 * Cada ‘*’corresponde   a   50   comparendos. 
 	 * Para   una   localidad,   si   su   residuo del   total   de comparendos al  dividir  entre  50  es  un  número  mayor  a  0,

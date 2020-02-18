@@ -125,68 +125,39 @@ public class TestCola<K> {
 	}
 
 	@Test
-	public void testconsultarComparendosCodigoInfracc()
+	public void testConsultarComparendosCodigoInfracc()
 	{
-		SetUp();
-
-
-		colaPrueba.darPrimero();
-
-		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
-
+		
 
 
 	}
 
 	@Test
-	public void testcompararComparendoCodigoSegunTipoServi()
+	public void testCompararComparendoCodigoSegunTipoServi()
 	{
-		SetUp();
-
-
-		colaPrueba.darPrimero();
-
-		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
+		
 
 
 
 	}
 	@Test
-	public void testarrayComparendofecha()
+	public void testArrayComparendofecha()
 	{
-		SetUp();
-
-
-		colaPrueba.darPrimero();
-
-		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
-
+		
 
 
 	}
 	@Test
-	public void testordenadorArrayComparendoFecha()
+	public void testOrdenadorArrayComparendoFecha()
 	{
-		SetUp();
-
-
-		colaPrueba.darPrimero();
-
-		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
-
+		
 
 
 	}
 	@Test
-	public void testarrayComparendoInfracc()
+	public void testArrayComparendoInfracc()
 	{
-		SetUp();
-
-
-		colaPrueba.darPrimero();
-
-		assertEquals("NO  correcto",colaPrueba.darPrimero(),3);
-
+		
 
 
 	}
@@ -194,7 +165,7 @@ public class TestCola<K> {
 	
 
 	
-	public void testordenadorComparedoInfracc()
+	public void testOrdenadorComparedoInfracc()
 	{
 
 
@@ -208,19 +179,19 @@ public class TestCola<K> {
 
 	}
 	
-	public void consultarNComparendosMayoresSegunPeriodoFecha()
+	public void testConsultarNComparendosMayoresSegunPeriodoFecha()
 	{
 
 
 
 	}
 	
-	public void GeneradorHistrogramaASCIINUmTotalSegunLocalidad()
+	public void testGeneradorHistrogramaASCIINUmTotalSegunLocalidad()
 	{
 
 
 
 	}
-	
+
 	
 }

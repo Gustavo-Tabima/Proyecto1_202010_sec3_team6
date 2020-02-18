@@ -24,30 +24,37 @@ public class TestModelo {
 
 	@Test
 	public void testModelo() {
-		assertTrue(modelo!=null);
-		assertEquals(0, modelo.darTamano());  // Modelo con 0 elementos presentes.
+		
 	}
 
 	@Test
 	public void testDarTamano() {
-		// TODO
 	}
 
 	@Test
 	public void testAgregar() {
-		// TODO Completar la prueba
 	}
 
 	@Test
 	public void testBuscar() {
 		setUp2();
-		// TODO Completar la prueba
 	}
 
 	@Test
-	public void testEliminar() {
+	public void totalComparendosCola() {
 		setUp2();
-		// TODO Completar la prueba
+		
+	}
+	
+	@Test
+	public void comparendoMayorObId() {
+		setUp2();
+		
+	}
+	
+	@Test
+	public void zonaMinmax() {
+		setUp2();
 		
 	}
 

@@ -2,6 +2,7 @@ package model.data_structures;
 
 import java.util.ArrayList;
 
+
 import model.logic.Comparendo;
 
 public class Cola <K> implements Icola{

@@ -42,14 +42,14 @@ public class Cola <K> implements Icola{
 			termino=termino.darSiguente();
 			tamano++;	
 		}
-		
+
 
 	}
 
 	@Override
 	public K darPrimero() {
 		// TODO Auto-generated method stub
-	
+
 		return (K) inicio;
 	}
 
@@ -206,9 +206,9 @@ public class Cola <K> implements Icola{
 		return  resp;
 
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Comparar  los comparendos,por  cada  código de infraccion,
 	 * en dos  fechas dadas. La  comparación solicitada consiste  en mostrar  el total de  comparendos  de  cada  código   para cada fecha.
@@ -217,38 +217,39 @@ public class Cola <K> implements Icola{
 	 *  * @return total de comparendos segun fecha
 	 */
 	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
-Nodo actual = inicio;
-String respuesta = "No hay comparendos entre esas fechas";
-ArrayList listaRespuesta= new ArrayList<Comparendo>();
-while(iterador.hasNext()) {
-	if(actual.darComparendo().darFecha().compareTo(fecha1) == 0) {
-		listaRespuesta.add(actual);
-	}
-	else if(actual.darComparendo().darFecha().compareTo(fecha1) == 1 && actual.darComparendo().darFecha().
-			compareTo(fecha2) == -1) {
-		listaRespuesta.add(actual);
-	}
-}	
 
-if(!listaRespuesta.isEmpty()) {
-	int i = 0;
-	while (i < listaRespuesta.size()) {
-		Comparendo encontrado = (Comparendo) listaRespuesta.get(i);
-		respuesta += ""+ encontrado.darInfraccion();
-		
-	}
-}
-return respuesta;
+		Nodo actual = inicio;
+		String respuesta = "No hay comparendos entre esas fechas";
+		ArrayList listaRespuesta= new ArrayList<Comparendo>();
+		while(iterador.hasNext()) {
+			if(actual.darComparendo().darFecha().compareTo(fecha1) == 0) {
+				listaRespuesta.add(actual);
+			}
+			else if(actual.darComparendo().darFecha().compareTo(fecha1) == 1 && actual.darComparendo().darFecha().
+					compareTo(fecha2) == -1) {
+				listaRespuesta.add(actual);
+			}
+		}	
+
+		if(!listaRespuesta.isEmpty()) {
+			int i = 0;
+			while (i < listaRespuesta.size()) {
+				Comparendo encontrado = (Comparendo) listaRespuesta.get(i);
+				respuesta += ""+ encontrado.darInfraccion();
+
+			}
+		}
+		return respuesta;
 	}	
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con el codigo de infraccion dado por parametro.
 	 * @param Pinfraccion infraccion que debe tener el comparendo
 	 *  * @return El primer comparendo que cumpla la condicion
 	 */
-	
+
 	public String consultarPrimerComparendoPorInfraccion(String Pinfraccion) {
 		String respuesta = "No se encontró ningún comparendo que cumpla con la infracción requerida.";
-		
+
 		Nodo actual = darInicial();
 		if(!(actual.darComparendo().darInfraccion().contentEquals(Pinfraccion))) {
 			actual = actual.darSiguente();
@@ -257,32 +258,47 @@ return respuesta;
 		else {
 			respuesta = actual.darComparendo().toString();
 		}
-		
+
 		return respuesta;
 
 	}
-	
-	
+
+
 	/**
 	 * Consulta y devuelve los comparendos que encuentre segun un codigo de infraccion de manera ordenada(menor a mayor segun fecha).
 	 * @param pInfrac codigo de infraccion que deben tener los comparendos
 	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
 	 */
-	
+
 	public K consultarComparendosCodigoInfracc(K pInfrac) {
-		return pInfrac;
-		
+		arrayComparendofecha(pInfrac);
+		ordenadorArrayComparendoFecha(pInfrac);
+		String resp ="";
+		for (int i = 0; i < arrayComparendofecha(pInfrac).size(); i++) {
+			Comparendo act = arrayComparendofecha(pInfrac).get(i);
+			resp=resp + act.darObjectId()+"," + act.darFecha()+act.darInfraccion()+"," +act.darClaseVehi()+"," +act.darTipoServi()+"," +act.darLocalidad()+"\n";
+
+		}
+
+		resp=resp+"total de comparendo segun consulta: "+arrayComparendofecha(pInfrac).size();
+
+
+
+
+
+		return  (K) resp;
+
 	}
-	
+
 	/**
 	 * Comparar  los comparendos,por  cada  código de infraccion,en segun su tipo de servicio (particular o publico). 
 	 * La  comparación solicitada consiste  en mostrar  el total de  comparendos  de  cada  código   para cada tipo de servicio.
 	 *   @return total de comparendos segun tipo de servicio
 	 */
-	
+
 	public K compararComparendoCodigoSegunTipoServi() {
 		return null;
-		
+
 	}
 
 	/**
@@ -323,17 +339,18 @@ return respuesta;
 		for (int i = 0; i < arrayComparendofecha(Pfecha).size() ; i++) {
 			Comparendo act = arrayComparendofecha(Pfecha).get(i);
 			Comparendo sig = arrayComparendofecha(Pfecha).get(i+1);
-			if ((act.darInfraccion().compareTo(sig.darInfraccion()))>0) {
+			if ((act.darInfraccion().compareTo(sig.darInfraccion()))<0) {
 				arrayComparendofecha(Pfecha).set(i, sig);
 				arrayComparendofecha(Pfecha).set(i+1, act);
 				contador++;
 
 			}
-			if (contador!=0) {
-				ordenadorArrayComparendoFecha(Pfecha);
-			}
+			
 
 
+		}
+		if (contador!=0) {
+			ordenadorArrayComparendoFecha(Pfecha);
 		}
 	}
 
@@ -360,19 +377,36 @@ return respuesta;
 		return comparendoQueConcuerdan;
 
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Consulta   una lista  de comparendos y la ordena segun fecha de menor a mayor.
 	 * @param Pfecha Fecha que deben tener los comparendos
 	 *  * pos: lista de comaparendos ordenada de mayor a menor segun codigo de infraccion
 	 */
-	
+
 	public void ordenadorComparedoInfracc(K pInfracc){
 		
+		int contador=0;
+		for (int i = 0; i < arrayComparendoInfracc(pInfracc).size() ; i++) {
+			Comparendo act = arrayComparendoInfracc(pInfracc).get(i);
+			Comparendo sig = arrayComparendoInfracc(pInfracc).get(i+1);
+			if ((act.darFecha().compareTo(sig.darFecha()))>0) {
+				arrayComparendofecha(pInfracc).set(i, sig);
+				arrayComparendofecha(pInfracc).set(i+1, act);
+				contador++;
+
+			}
+			
+
+
+		}
+		if (contador!=0) {
+			ordenadorArrayComparendoFecha(pInfracc);
+		}
 	}
-	
+
 	/**
 	 * Muestra el numero de comparendos por cada código de infraccion en una localidad dada,
 	 *  para un periodo de tiempo dado por: fecha inicial y final.
@@ -382,13 +416,13 @@ return respuesta;
 	 * @param pLocalidad Localidad dada por parametro
 	 * @return numero de comparendo dados por localidad en un peiodo de tiempo
 	 */
-	
+
 	public K NumerodeComparendosCodigoSegunLocalidad(K pLocalidad, K fechaInicial, K fechaFinal ) {
 		return null;
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Muestra numero dado de codigos de infraccion mas frecuente en un periodo de tiempo dado,
 	 *  Los  resultados  deben  ser  presentados  en formato de tabla
@@ -399,7 +433,7 @@ return respuesta;
 	 */
 	public K consultarNComparendosMayoresSegunPeriodoFecha(K N ,K fechaInicial, K fechaFinal) {
 		return N;
-		
+
 	}
 	/**
 	 * Genera una gráfica ASCII (Histograma) que muestra el número total de comparendos por  cada  LOCALIDAD ,representados  por  un  String  de  caracteres  ‘*’. 
@@ -411,14 +445,14 @@ return respuesta;
 	 */
 	public K GeneradorHistrogramaASCIINUmTotalSegunLocalidad() {
 		return null;
-		
+
 	}
-	
+
 	public String mostrarMayorId() {
 		String respuesta = "";
-		
 
-		
+
+
 		return respuesta;
 	}
 

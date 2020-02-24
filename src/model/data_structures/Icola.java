@@ -2,17 +2,17 @@ package model.data_structures;
 
 public interface Icola <K> {
 
-public void instertar(K pnuevo);
+public void enqueue(K pnuevo);
 	
 	public K darPrimero();
 	
-	public boolean estaVacio();
+	public boolean isEmpty();
 	
 	public int darTamano();
 	
 	public K buscarElemento(K buscado);
 		
-	public K sacar();
+	public K dequeue();
 	
 	public K darFinal();
 

@@ -36,10 +36,11 @@ public class Controller {
 			int option = lector.nextInt();
 			switch(option){
 				case 1:
-					view.printMessage("--------- \nCrear Arreglo \nDar capacidad inicial del arreglo: ");
-				    int capacidad = lector.nextInt();
-				    modelo = new Modelo(capacidad); 
-				    view.printMessage("Arreglo Dinamico creado");
+					view.printMessage("--------- \nCrear Cola \nDar tamaño inicial del arreglo: ");
+					modelo.cargarDatosCola();
+					
+				    view.printMessage("Cola creada");
+				    
 				    view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
 					break;
 

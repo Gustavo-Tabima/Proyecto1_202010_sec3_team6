@@ -1,8 +1,10 @@
 package model.data_structures;
 
+import java.util.Iterator;
+
 import model.logic.Comparendo;
 
-public class Nodo <K>  {
+public class Nodo <K extends Iterable <K>>  {
 
 	private Nodo <K> siguiente;
 	
@@ -33,4 +35,8 @@ public class Nodo <K>  {
 	{
 		datos = dato;
 	}
+	
+
+
 }
+

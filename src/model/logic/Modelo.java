@@ -37,18 +37,18 @@ public class Modelo {
 	/**
 	 * Constante que representa los datos a buscar
 	 */
-	public static String PATH = "./data/comparendos_dei_2018.geojson";
+	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
 
 	/**
 	 * Atributos del modelo del Mundo
 	 */
-	private Icola datosCola;
+	private Cola datosCola;
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public Modelo()
 	{
-		datosCola = new Cola<Comparendo>();
+		datosCola = new Cola<Nodo>();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class Modelo {
 	 */
 	public void agregar(String dato)
 	{	
-		datosCola.instertar(dato);
+		datosCola.enqueue(dato);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Modelo {
 	 */
 	public String buscar(String dato)
 	{
-		return (String) datosCola.buscarElemento(dato);
+		return datosCola.buscarElemento(dato).toString();
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class Modelo {
 	 */
 	public String eliminar(String dato)
 	{ 	String resp = null;
-	if (!datosCola.estaVacio()) {
+	if (!datosCola.isEmpty()) {
 
 		if(datosCola.darPrimero().equals(dato)) {
 			datosCola.eliminar();
@@ -112,7 +112,7 @@ public class Modelo {
 	public Cola<Comparendo> cargarDatosCola() {
 
 
-		Cola<Comparendo> datosCola = new Cola<Comparendo>();
+	
 
 		JsonReader reader;
 		try {
@@ -144,7 +144,7 @@ public class Modelo {
 
 				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
 
-				datosCola.instertar(c);
+				datosCola.enqueue(c);
 			}
 
 		} catch (FileNotFoundException | ParseException e) {

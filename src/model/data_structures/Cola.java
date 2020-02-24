@@ -1,13 +1,14 @@
 package model.data_structures;
 
 import java.util.ArrayList;
-
+import java.util.Date;
+import java.util.Iterator;
 
 import model.logic.Comparendo;
 
 public class Cola <K> implements Icola{
 
-
+	private Iterator<Nodo> iterador;
 	private Nodo inicio;
 	private Nodo termino;
 	private int tamano;
@@ -25,7 +26,7 @@ public class Cola <K> implements Icola{
 	}
 
 	@Override
-	public void instertar(Object pnuevo) {
+	public void enqueue(Object pnuevo) {
 		// TODO Auto-generated method stub
 		Nodo nuevoNodo=new Nodo((Comparendo) pnuevo);
 		nuevoNodo.setSiguiente(null);
@@ -36,22 +37,24 @@ public class Cola <K> implements Icola{
 			tamano++;
 
 		}
-		termino.setSiguiente(nuevoNodo);
-		termino=termino.darSiguente();
-		tamano++;
+		else {
+			termino.setSiguiente(nuevoNodo);
+			termino=termino.darSiguente();
+			tamano++;	
+		}
+		
 
 	}
 
 	@Override
 	public K darPrimero() {
 		// TODO Auto-generated method stub
-		K dato=(K) inicio.darComparendo();
-
-		return dato;
+	
+		return (K) inicio;
 	}
 
 	@Override
-	public boolean estaVacio() {
+	public boolean isEmpty() {
 		boolean cola=false;
 		if(inicio==null & termino==null)
 		{
@@ -85,9 +88,9 @@ public class Cola <K> implements Icola{
 
 
 	@Override
-	public K buscarElemento(Object buscado) {
+	public Comparendo buscarElemento(Object buscado) {
 		// TODO Auto-generated method stub
-		if (estaVacio()!=true) {
+		if (isEmpty()!=true) {
 
 			Nodo act=inicio;
 			boolean encontrado=false;
@@ -100,7 +103,7 @@ public class Cola <K> implements Icola{
 
 			}
 			if (encontrado!=false) {
-				return (K) act.darComparendo();
+				return act.darComparendo();
 			}
 			else {
 				return null;
@@ -119,7 +122,7 @@ public class Cola <K> implements Icola{
 	@Override
 	public void eliminar() {
 
-		if (estaVacio()==false) {
+		if (isEmpty()==false) {
 			Nodo out = inicio;
 
 			Nodo queue=inicio.darSiguente();
@@ -140,7 +143,7 @@ public class Cola <K> implements Icola{
 	}
 
 
-	public K sacar(){
+	public K dequeue(){
 		K out = darPrimero();
 		eliminar();
 
@@ -160,11 +163,11 @@ public class Cola <K> implements Icola{
 	 *  * @return El primer comparendo que cumpla la condicion
 	 */
 
-	public Comparendo consultarPrimerComparendoPorLocalidad(K Plocalidad) {
+	public Comparendo consultarPrimerComparendoPorLocalidad(String Plocalidad) {
 		Nodo act =  inicio;
 
 		while (act!=null) {
-			K X =(K) act.darComparendo().darLocalidad();
+			String X = act.darComparendo().darLocalidad();
 			if (X.equals(Plocalidad)) {
 				System.out.println("Primer comparendo con localidad indicada "+act.darComparendo());
 				return act.darComparendo();
@@ -184,7 +187,7 @@ public class Cola <K> implements Icola{
 	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
 	 */
 
-	public K consultarComparendosFecha(K Pfecha) {
+	public String consultarComparendosFecha(K Pfecha) {
 		arrayComparendofecha(Pfecha);
 		ordenadorArrayComparendoFecha(Pfecha);
 		String resp ="";
@@ -200,7 +203,7 @@ public class Cola <K> implements Icola{
 
 
 
-		return (K) resp;
+		return  resp;
 
 	}
 	
@@ -213,20 +216,49 @@ public class Cola <K> implements Icola{
 	 * * @param fecha2  Fecha que deben tener los comparendos
 	 *  * @return total de comparendos segun fecha
 	 */
-	public K comparaComparendoCodigoSegunFechas(K fecha1, K fecha2) {
-		return null;
-
+	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
+Nodo actual = inicio;
+String respuesta = "No hay comparendos entre esas fechas";
+ArrayList listaRespuesta= new ArrayList<Comparendo>();
+while(iterador.hasNext()) {
+	if(actual.darComparendo().darFecha().compareTo(fecha1) == 0) {
+		listaRespuesta.add(actual);
 	}
-	
-	
+	else if(actual.darComparendo().darFecha().compareTo(fecha1) == 1 && actual.darComparendo().darFecha().
+			compareTo(fecha2) == -1) {
+		listaRespuesta.add(actual);
+	}
+}	
+
+if(!listaRespuesta.isEmpty()) {
+	int i = 0;
+	while (i < listaRespuesta.size()) {
+		Comparendo encontrado = (Comparendo) listaRespuesta.get(i);
+		respuesta += ""+ encontrado.darInfraccion();
+		
+	}
+}
+return respuesta;
+	}	
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con el codigo de infraccion dado por parametro.
 	 * @param Pinfraccion infraccion que debe tener el comparendo
 	 *  * @return El primer comparendo que cumpla la condicion
 	 */
 	
-	public K consultarPrimerComparendoPorInfraccion(K Pinfraccion) {
-		return null;
+	public String consultarPrimerComparendoPorInfraccion(String Pinfraccion) {
+		String respuesta = "No se encontró ningún comparendo que cumpla con la infracción requerida.";
+		
+		Nodo actual = darInicial();
+		if(!(actual.darComparendo().darInfraccion().contentEquals(Pinfraccion))) {
+			actual = actual.darSiguente();
+			this.consultarPrimerComparendoPorInfraccion(Pinfraccion);
+		}
+		else {
+			respuesta = actual.darComparendo().toString();
+		}
+		
+		return respuesta;
 
 	}
 	
@@ -315,7 +347,7 @@ public class Cola <K> implements Icola{
 		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
 		String resp= "";
 		while (act!=null) {
-			K X =(K) act.darComparendo().darInfraccion();
+			String X = act.darComparendo().darInfraccion();
 			if (X.equals(pInfracc)) {
 				comparendoQueConcuerdan.add(act.darComparendo());
 
@@ -380,6 +412,14 @@ public class Cola <K> implements Icola{
 	public K GeneradorHistrogramaASCIINUmTotalSegunLocalidad() {
 		return null;
 		
+	}
+	
+	public String mostrarMayorId() {
+		String respuesta = "";
+		
+
+		
+		return respuesta;
 	}
 
 }

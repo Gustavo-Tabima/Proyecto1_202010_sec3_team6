@@ -1,183 +1,164 @@
 package model.data_structures;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 
 import model.logic.Comparendo;
 
-public class Cola <K> implements Icola{
+/**
+ * 2020-01  Gustavo Tabima - Josue Rivera
+ * Estructura de Datos Arreglo Dinamico Generico
+ *
+ */
+public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
-	private Iterator<Nodo> iterador;
-	private Nodo inicio;
-	private Nodo termino;
-	private int tamano;
+	//---------------------------------------------------------------------------------------------
+	//--------------------------Atributos----------------------------------------------------------
+	//---------------------------------------------------------------------------------------------
+	/**
+	 * Capacidad maxima del arreglo
+	 */
+	private int tamanoMax;
+	/**
+	 * Numero de elementos presentes en el arreglo (de forma compacta desde la posicion 0)
+	 */
+	private int tamanoAct;
+	/**
+	 * Arreglo de elementos de tamaNo maximo
+	 */
+	private Comparendo elementos[ ];
 
-	public Cola()
+	/**
+	 * Construir un arreglo con la capacidad maxima inicial.
+	 * @param max Capacidad maxima inicial
+	 */
+
+
+	//---------------------------------------------------------------------------------------------
+	//--------------------------Métodos----------------------------------------------------------
+	//---------------------------------------------------------------------------------------------
+
+	/**
+	 * Crea un arreglo dinamico con un tamaño establecido.
+	 * 
+	 */
+	public ArregloDinamico( int Max)
 	{
-		inicio=null;
-		termino=null;
-		tamano=0;
+		elementos = (Comparendo[]) new Comparable[Max];;
+		tamanoMax = Max;
+		tamanoAct = 0;
 	}
 
+	/**Agrea un elemento al arreglo dinámico y modifica su tamaño 
+	 * 
+	 */
+	public void agregar( K compa)
+	{
+		if ( tamanoAct == tamanoMax )
+		{  // caso de arreglo lleno (aumentar tamaNo)
+			tamanoMax = 2 * tamanoMax;
+			Object [ ] copia = elementos;
+			elementos = (Comparendo[]) new Comparable[tamanoMax];
+			for ( int i = 0; i < tamanoAct; i++)
+			{
+				elementos[i] = (Comparendo) copia[i];
+			} 
+			System.out.println("Arreglo lleno: " + tamanoAct + " - Arreglo duplicado: " + tamanoMax);
+		}	
+		elementos[tamanoAct] = (Comparendo) compa;
+		tamanoAct++;
+	}
 
-	public Nodo darInicial() {
-		return inicio;
+	/**
+	 *Da la capacidad del arreglo dinámico. 
+	 * @return
+	 */
+	public int darCapacidad() {
+		return tamanoMax;
+	}
+
+	public int darTamano() {
+		return tamanoAct;
 	}
 
 	@Override
-	public void enqueue(Object pnuevo) {
-		// TODO Auto-generated method stub
-		Nodo nuevoNodo=new Nodo((Comparendo) pnuevo);
-		nuevoNodo.setSiguiente(null);
-		if(inicio==null & termino==null)
-		{
-			inicio=nuevoNodo;
-			termino=nuevoNodo;
-			tamano++;
-
+	public K darElemento(int a) {
+		if (elementos[a]!=null) {
+			System.out.println(elementos[a]);
+			return (K) elementos[a];
 		}
 		else {
-			termino.setSiguiente(nuevoNodo);
-			termino=termino.darSiguente();
-			tamano++;	
+			System.out.println("El elemento en la posicion dada no existe");
+			return null;
+
 		}
 
-
 	}
 
 	@Override
-	public K darPrimero() {
-		// TODO Auto-generated method stub
-
-		return (K) inicio;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		boolean cola=false;
-		if(inicio==null & termino==null)
+	public K buscar(K dato) {
+		boolean encontrado = false;
+		for(int i = 0; i<elementos.length && !encontrado; i++)
 		{
-			cola=true;
-			System.out.println("La cola esta vacia");
-		}
-		else
-		{
-			System.out.println("La cola no esta vacia");
-			cola=false;
-		}
-		return cola;
-	}
+			if(elementos[i].equals(dato))
+			{
+				encontrado = true;
+				System.out.println(elementos[i]);
 
-	@Override
-	public int darTamano() {
-		int contador=0;
-		Nodo c=inicio;
-		while(c!=null)
-		{
-			contador++;
-			c=c.darSiguente();
+				return (K) elementos[i];
+			}
 		}
-		System.out.println("Numero de datos en la cola: "+contador);
-		tamano=contador;
+		System.out.println("El elemento en la posicion buscada no existe");
 
-		return contador;
+		return null;
 	}
 
 
-
-
+	
+	
 	@Override
-	public Comparendo buscarElemento(Object buscado) {
-		// TODO Auto-generated method stub
-		if (isEmpty()!=true) {
+	public K eliminar(K dato) {
 
-			Nodo act=inicio;
-			boolean encontrado=false;
-			while (act!=null && encontrado==false) {
-				if (act.darComparendo().equals(buscado)) {
-					encontrado=true;
-				}else {
-					act=act.darSiguente();
+		for (int i = 0; i < elementos.length; i++) {
+			if(elementos[i].equals((K) dato))
+			{
+				K Y = (K) elementos[i];
+				elementos[i]=null;
+				System.out.println(elementos[i]+" Eliminado");
+				for (int j = i; j < elementos.length - 1; j++) {
+					elementos[j] = elementos[j+1];
 				}
 
-			}
-			if (encontrado!=false) {
-				return act.darComparendo();
-			}
-			else {
-				return null;
-			}
+				return Y;
 
-		}else {
-			return null;
+			}
 		}
-
-
-	}
-
-
-
-
-	@Override
-	public void eliminar() {
-
-		if (isEmpty()==false) {
-			Nodo out = inicio;
-
-			Nodo queue=inicio.darSiguente();
-			inicio=queue;
-			out.setSiguiente(null);
-			tamano--;
-
-
-
-			;
-
-		}else {
-			System.out.println("No se pudo eliminar,esta vacia la cola");
-
-		}
-
+		return null;
 
 	}
-
-
-	public K dequeue(){
-		K out = darPrimero();
-		eliminar();
-
-
-		return out;
-	}
-
-	public K darFinal() {
-		return (K) termino.darComparendo();
-	}
-
-
-
+	
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con la localidad buscada.
 	 * @param Plocalidad localidad que debe tner el comparendo
 	 *  * @return El primer comparendo que cumpla la condicion
 	 */
+	//parte A3
 
 	public Comparendo consultarPrimerComparendoPorLocalidad(String Plocalidad) {
-		Nodo act =  inicio;
 
-		while (act!=null) {
-			String X = act.darComparendo().darLocalidad();
+		for (int i = 0; i < elementos.length; i++) {
+			Comparendo act = elementos[i];
+			String X = act.darLocalidad();
 			if (X.equals(Plocalidad)) {
-				System.out.println("Primer comparendo con localidad indicada "+act.darComparendo());
-				return act.darComparendo();
+				System.out.println("Primer comparendo con localidad indicada "+act);
+				return act;
 			}
-			act=act.darSiguente();
+
 		}
 
 		System.out.println("No se encontro ningun comparendo con la localidad indicada");
 		return null;
-
 	}
 
 
@@ -186,6 +167,7 @@ public class Cola <K> implements Icola{
 	 * @param Pfecha Fecha que deben tener los comparendos
 	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
 	 */
+	//parte A2
 
 	public String consultarComparendosFecha(K Pfecha) {
 		arrayComparendofecha(Pfecha);
@@ -211,25 +193,55 @@ public class Cola <K> implements Icola{
 
 	/**
 	 * Comparar  los comparendos,por  cada  código de infraccion,
-	 * en dos  fechas dadas. La  comparación solicitada consiste  en mostrar  el total de  comparendos  de  cada  código   para cada fecha.
+	 * en dos  fechas dadas. La  comparación solicitada consiste  en mostrar  el total de comparendos  de  cada  código   para las 2 fechas.
 	 * @param fecha1  Fecha que deben tener los comparendos
 	 * * @param fecha2  Fecha que deben tener los comparendos
-	 *  * @return total de comparendos segun fecha
+	 *  * @return total de cada tipo de comparendos en las fechas fecha
 	 */
+	//parte A3
+	//nota no esta terminado este ;v
 	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
-
-		Nodo actual = inicio;
 		String respuesta = "No hay comparendos entre esas fechas";
-		ArrayList listaRespuesta= new ArrayList<Comparendo>();
-		while(iterador.hasNext()) {
-			if(actual.darComparendo().darFecha().compareTo(fecha1) == 0) {
-				listaRespuesta.add(actual);
+		String respuesta2 = "Infracción | "+fecha1+" | "+fecha2+"\n";
+
+		ArrayList<Comparendo> listaRespuesta= new ArrayList<Comparendo>();
+		
+		ArrayList<Comparendo> listaFecha1= new ArrayList<Comparendo>();
+		ArrayList<Comparendo> listaFecha2= new ArrayList<Comparendo>();
+
+		
+		
+		for (int i = 0; i < elementos.length; i++) {
+			Comparendo actual = elementos[i];
+
+			
+				if(actual.darFecha().equals(fecha1)) {
+					listaFecha1.add(actual);
+				}
+				 if(actual.darFecha().equals(fecha2)) {
+					 listaFecha2.add(actual);
+				}
+			}	
+		
+		for (int i = 0; i < listaFecha1.size(); i++) {
+			int contador=0;
+			Comparendo act = (Comparendo) listaFecha1.get(i);
+			ArrayList<Comparendo> conta= new ArrayList<Comparendo>();
+
+			for (int j = 0; j < listaFecha2.size(); j++) {
+				Comparendo pres = (Comparendo) listaFecha2.get(i);
+				if (codigoUsado((K) act) != null) {
+					if (act.darInfraccion().equals(pres.darInfraccion() )) {
+						
+					}
+					respuesta2=respuesta2+ act.darDesInfraccion() +" | ";
+				}
+				
 			}
-			else if(actual.darComparendo().darFecha().compareTo(fecha1) == 1 && actual.darComparendo().darFecha().
-					compareTo(fecha2) == -1) {
-				listaRespuesta.add(actual);
-			}
-		}	
+			
+		}
+		
+		
 
 		if(!listaRespuesta.isEmpty()) {
 			int i = 0;
@@ -241,25 +253,45 @@ public class Cola <K> implements Icola{
 		}
 		return respuesta;
 	}	
+
+public K codigoUsado(K pcomparendo) {
+	K prueba = null;
+	ArrayList<Comparendo> listaUsados= new ArrayList<Comparendo>();
+
+	
+	if (listaUsados.contains(pcomparendo)) {
+		prueba=(K) "usado";
+	}else {
+		listaUsados.add((Comparendo) pcomparendo);
+	}
+	
+	
+	return prueba;
+	
+}
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con el codigo de infraccion dado por parametro.
 	 * @param Pinfraccion infraccion que debe tener el comparendo
 	 *  * @return El primer comparendo que cumpla la condicion
 	 */
+	
+//parte B1
+	public Comparendo consultarPrimerComparendoPorInfraccion(String Pinfraccion) {
 
-	public String consultarPrimerComparendoPorInfraccion(String Pinfraccion) {
-		String respuesta = "No se encontró ningún comparendo que cumpla con la infracción requerida.";
+		for (int i = 0; i < elementos.length; i++) {
+			Comparendo act = elementos[i];
+			String X = act.darLocalidad();
+			if (X.equals(Pinfraccion)) {
+				System.out.println("Primer comparendo con localidad indicada "+act);
+				return act;
+			}
 
-		Nodo actual = darInicial();
-		if(!(actual.darComparendo().darInfraccion().contentEquals(Pinfraccion))) {
-			actual = actual.darSiguente();
-			this.consultarPrimerComparendoPorInfraccion(Pinfraccion);
 		}
-		else {
-			respuesta = actual.darComparendo().toString();
-		}
 
-		return respuesta;
+		System.out.println("No se encontro ningun comparendo con la Infraccion indicada");
+		return null;
+
+
 
 	}
 
@@ -269,8 +301,8 @@ public class Cola <K> implements Icola{
 	 * @param pInfrac codigo de infraccion que deben tener los comparendos
 	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
 	 */
-
-	public K consultarComparendosCodigoInfracc(K pInfrac) {
+//parte B2
+	public String consultarComparendosCodigoInfracc(K pInfrac) {
 		arrayComparendofecha(pInfrac);
 		ordenadorArrayComparendoFecha(pInfrac);
 		String resp ="";
@@ -286,7 +318,7 @@ public class Cola <K> implements Icola{
 
 
 
-		return  (K) resp;
+		return   resp;
 
 	}
 
@@ -295,8 +327,10 @@ public class Cola <K> implements Icola{
 	 * La  comparación solicitada consiste  en mostrar  el total de  comparendos  de  cada  código   para cada tipo de servicio.
 	 *   @return total de comparendos segun tipo de servicio
 	 */
-
+//parte B3
 	public K compararComparendoCodigoSegunTipoServi() {
+		
+		
 		return null;
 
 	}
@@ -308,21 +342,23 @@ public class Cola <K> implements Icola{
 	 */
 
 	public ArrayList<Comparendo> arrayComparendofecha(K Pfecha) {
-		Nodo act =  inicio;
 		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
-		String resp= "";
-		while (act!=null) {
-			K X =(K) act.darComparendo().darFecha();
+
+		for (int j = 0; j < elementos.length; j++) {
+			Comparendo act = elementos[j];
+
+			K X =(K) act.darFecha();
+			
 			if (X.equals(Pfecha)) {
-				comparendoQueConcuerdan.add(act.darComparendo());
-
-
+				comparendoQueConcuerdan.add(act);
 			}
-			act=act.darSiguente();
+
+
 
 		}
 
 		return comparendoQueConcuerdan;
+
 
 	}
 
@@ -345,7 +381,7 @@ public class Cola <K> implements Icola{
 				contador++;
 
 			}
-			
+
 
 
 		}
@@ -354,29 +390,34 @@ public class Cola <K> implements Icola{
 		}
 	}
 
+
+
+
+
+
 	/**
 	 * Consulta y devuelve  una listalos comparendos que encuentre segun codigo de infraccion
 	 * @param pInfracc codigo de infraccion que deben tener los comparendos
 	 *  * @return lista de comaparendos
 	 */
 	public ArrayList<Comparendo> arrayComparendoInfracc(K pInfracc) {
-		Nodo act =  inicio;
 		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
-		String resp= "";
-		while (act!=null) {
-			String X = act.darComparendo().darInfraccion();
+
+		for (int j = 0; j < elementos.length; j++) {
+			Comparendo act = elementos[j];
+
+			K X =(K) act.darInfraccion();
+			
 			if (X.equals(pInfracc)) {
-				comparendoQueConcuerdan.add(act.darComparendo());
-
-
+				comparendoQueConcuerdan.add(act);
 			}
-			act=act.darSiguente();
+
+
 
 		}
 
 		return comparendoQueConcuerdan;
-
-	}
+		}
 
 
 
@@ -387,7 +428,7 @@ public class Cola <K> implements Icola{
 	 */
 
 	public void ordenadorComparedoInfracc(K pInfracc){
-		
+
 		int contador=0;
 		for (int i = 0; i < arrayComparendoInfracc(pInfracc).size() ; i++) {
 			Comparendo act = arrayComparendoInfracc(pInfracc).get(i);
@@ -398,7 +439,7 @@ public class Cola <K> implements Icola{
 				contador++;
 
 			}
-			
+
 
 
 		}
@@ -416,7 +457,7 @@ public class Cola <K> implements Icola{
 	 * @param pLocalidad Localidad dada por parametro
 	 * @return numero de comparendo dados por localidad en un peiodo de tiempo
 	 */
-
+	//parte C1
 	public K NumerodeComparendosCodigoSegunLocalidad(K pLocalidad, K fechaInicial, K fechaFinal ) {
 		return null;
 
@@ -431,10 +472,13 @@ public class Cola <K> implements Icola{
 	 * @param N Numero de codigos que se va a buscar.
 	 * @return numero de comparendo mas frecuentes en un peiodo de tiempo
 	 */
+//parte C2
 	public K consultarNComparendosMayoresSegunPeriodoFecha(K N ,K fechaInicial, K fechaFinal) {
 		return N;
 
 	}
+	
+	
 	/**
 	 * Genera una gráfica ASCII (Histograma) que muestra el número total de comparendos por  cada  LOCALIDAD ,representados  por  un  String  de  caracteres  ‘*’. 
 	 * Los  nombres  de  las localidades deben aparecer alfabéticamente y deben justificarse a 16 caracteres.
@@ -443,6 +487,8 @@ public class Cola <K> implements Icola{
 	 *   este  residuo  corresponde también a  un ‘*’.
 	 * @return gráfica ASCII
 	 */
+	//parte C3
+
 	public K GeneradorHistrogramaASCIINUmTotalSegunLocalidad() {
 		return null;
 
@@ -456,4 +502,7 @@ public class Cola <K> implements Icola{
 		return respuesta;
 	}
 
+	
+
 }
+

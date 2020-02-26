@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 
-public class Comparendo {
+public class Comparendo <K extends Comparable<K>>{
 	private int objectId;
 	private Date fecha_hora;
 	private String des_infrac;
@@ -85,6 +85,11 @@ public class Comparendo {
 	public Date darFecha() {
 		return fecha_hora;
 	}
+
+	
+
+	
+	
 
 
 }

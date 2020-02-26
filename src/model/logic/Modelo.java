@@ -1,16 +1,19 @@
 package model.logic;
 
-import java.io.FileReader;
+import java.io.FileNotFoundException;
 
+import java.io.FileReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-
-import model.data_structures.Cola;
-
-import model.data_structures.Icola;
-
-import model.data_structures.Nodo;
-
+import model.data_structures.ArregloDinamico;
+import model.data_structures.IArregloDinamico;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,30 +28,24 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import model.logic.Comparendo;
-
 
 /**
  * Definicion del modelo del mundo
+ * @param <K>
  *
  */
-public class Modelo {
-
+public class Modelo<K> {
 	/**
-	 * Constante que representa los datos a buscar
+	 * Atributos del modelo del mundo
 	 */
+	private ArregloDinamico datos;
 	public static String PATH = "./data/comparendos_dei_2018_small.geojson";
-
-	/**
-	 * Atributos del modelo del Mundo
-	 */
-	private Cola datosCola;
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
 	public Modelo()
 	{
-		datosCola = new Cola<Nodo>();
+		datos = new ArregloDinamico(7);
 	}
 
 	/**
@@ -57,62 +54,16 @@ public class Modelo {
 	 */
 	public Modelo(int capacidad)
 	{
-		datosCola = new Cola<Comparendo>();
-	}
 
-	/**
-	 * Servicio de consulta de numero de elementos presentes en el modelo 
-	 * @return numero de elementos presentes en el modelo
-	 */
-	public int darTamano()
-	{
-		return datosCola.darTamano();
-	}
-
-	/**
-	 * Requerimiento de agregar dato
-	 * @param dato
-	 */
-	public void agregar(String dato)
-	{	
-		datosCola.enqueue(dato);
-	}
-
-	/**
-	 * Requerimiento buscar dato
-	 * @param dato Dato a buscar
-	 * @return dato encontrado
-	 */
-	public String buscar(String dato)
-	{
-		return datosCola.buscarElemento(dato).toString();
-	}
-
-	/**
-	 * Requerimiento eliminar dato
-	 * @param dato Dato a eliminar
-	 */
-	public String eliminar(String dato)
-	{ 	String resp = null;
-	if (!datosCola.isEmpty()) {
-
-		if(datosCola.darPrimero().equals(dato)) {
-			datosCola.eliminar();
-			resp ="se elimino";
-		}
-		else {
-			resp="No se pido elminar";
-
-		}
-	}
-	return resp;
+		datos = new ArregloDinamico(capacidad);
 	}
 
 
-	public Cola<Comparendo> cargarDatosCola() {
+
+	public ArregloDinamico cargarDatos() {
 
 
-	
+
 
 		JsonReader reader;
 		try {
@@ -142,18 +93,67 @@ public class Modelo {
 				double latitud = e.getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray()
 						.get(1).getAsDouble();
 
-				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
+				Comparable c = (Comparable) new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
 
-				datosCola.enqueue(c);
+				datos.agregar(c);
 			}
 
 		} catch (FileNotFoundException | ParseException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		return datosCola;	}
+		return datos;	}
 	
-	
+	/**
+	 * Servicio de consulta de numero de elementos presentes en el modelo 
+	 * @return numero de elementos presentes en el modelo
+	 */
+	public int darTamano()
+	{
+		return datos.darTamano();
+	}
+
+	/**
+	 * Requerimiento de agregar dato
+	 * @param dato
+	 */
+	public void agregar(String dato)
+	{	
+		datos.agregar(dato);
+	}
+
+	/**
+	 * Requerimiento buscar dato
+	 * @param dato Dato a buscar
+	 * @return dato encontrado
+	 */
+	public String buscar(String dato)
+	{ String x =""+datos.buscar(dato);
+	return x;
+	}
+
+	/**
+	 * Requerimiento eliminar dato
+	 * @param dato Dato a eliminar
+	 * @return dato eliminado
+	 */
+	public String eliminar(String dato)
+
+	{
+		String resp="";
+
+		if (datos.eliminar(dato)==null) {
+			resp="NO se pudo eliminar";
+		}else {
+			resp =""+datos.eliminar(dato);
+
+		}
+
+		return resp;
+
+
+	}
+
 	/** recorre los datos cargados en la cola y da el numero total de cuantos hay
 	 * @return numero de comparendos en la cola
 	 */
@@ -167,8 +167,8 @@ public class Modelo {
 	public String comparendoMayorObId() {
 		return null;
 	}
-	
-	
+
+
 	/** analiza los datos de la cola y da la zona min-max
 	 * La zona Minimax de los comparendos es definida como límites inferior y superior de  latitud  y  longitud  en  todo  el  archivo.
 	 * El  Minimax  se  define  como  una  zona rectangular  con  dos  puntos  extremos:(la menor  latitud, la menor  longitud) 
@@ -178,4 +178,5 @@ public class Modelo {
 	public String zonaMinmax() {
 		return "";
 	}
+
 }

@@ -115,8 +115,8 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	}
 
 
-	
-	
+
+
 	@Override
 	public K eliminar(K dato) {
 
@@ -137,7 +137,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		return null;
 
 	}
-	
+
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con la localidad buscada.
 	 * @param Plocalidad localidad que debe tner el comparendo
@@ -200,82 +200,89 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	 */
 	//parte A3
 	//nota no esta terminado este ;v
+	@SuppressWarnings("unchecked")
 	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
-		String respuesta = "No hay comparendos entre esas fechas";
-		String respuesta2 = "Infracción | "+fecha1+" | "+fecha2+"\n";
+		String respuesta= "Infracción | "+fecha1+" | "+fecha2+"\n";
 
 		ArrayList<Comparendo> listaRespuesta= new ArrayList<Comparendo>();
-		
+
 		ArrayList<Comparendo> listaFecha1= new ArrayList<Comparendo>();
 		ArrayList<Comparendo> listaFecha2= new ArrayList<Comparendo>();
 
-		
-		
+
+
 		for (int i = 0; i < elementos.length; i++) {
 			Comparendo actual = elementos[i];
 
-			
-				if(actual.darFecha().equals(fecha1)) {
-					listaFecha1.add(actual);
-				}
-				 if(actual.darFecha().equals(fecha2)) {
-					 listaFecha2.add(actual);
-				}
-			}	
-		
+
+			if(actual.darFecha().equals(fecha1)) {
+				listaFecha1.add(actual);
+			}
+			if(actual.darFecha().equals(fecha2)) {
+				listaFecha2.add(actual);
+			}
+		}	
+
 		for (int i = 0; i < listaFecha1.size(); i++) {
-			int contador=0;
-			Comparendo act = (Comparendo) listaFecha1.get(i);
-			ArrayList<Comparendo> conta= new ArrayList<Comparendo>();
+			int contador1=0;
+			int contador2=0;
 
-			for (int j = 0; j < listaFecha2.size(); j++) {
-				Comparendo pres = (Comparendo) listaFecha2.get(i);
-				if (codigoUsado((K) act) != null) {
-					if (act.darInfraccion().equals(pres.darInfraccion() )) {
-						
-					}
-					respuesta2=respuesta2+ act.darDesInfraccion() +" | ";
+			String act = listaFecha1.get(i).darInfraccion();
+			if (codigoUsado((K) act)==null) {
+				contador1=	consultarNumComparendosCodigoInfracc(listaFecha1, act);
+				contador2= consultarNumComparendosCodigoInfracc(listaFecha2, act);
+				if (contador1>0 && contador2>0) {
+					
+					 respuesta = act +"| "+contador1+" | "+contador2+"\n";
+					
+					
 				}
-				
 			}
+
+
+
+
+
+		}
+
+
+
+		if (listaFecha1.size()==0  ) {
 			
+			respuesta="No hay comparendos en la fecha: " +fecha1;
+		
 		}
 		
-		
+		if (listaFecha2.size()==0) {
+			respuesta="No hay comparendos en la fecha: " +fecha2;
 
-		if(!listaRespuesta.isEmpty()) {
-			int i = 0;
-			while (i < listaRespuesta.size()) {
-				Comparendo encontrado = (Comparendo) listaRespuesta.get(i);
-				respuesta += ""+ encontrado.darInfraccion();
-
-			}
 		}
+		
 		return respuesta;
 	}	
 
-public K codigoUsado(K pcomparendo) {
-	K prueba = null;
-	ArrayList<Comparendo> listaUsados= new ArrayList<Comparendo>();
+	public K codigoUsado(K pcomparendo) {
+		K prueba = null;
+		ArrayList<Comparendo> listaUsados= new ArrayList<Comparendo>();
 
-	
-	if (listaUsados.contains(pcomparendo)) {
-		prueba=(K) "usado";
-	}else {
-		listaUsados.add((Comparendo) pcomparendo);
+
+		if (listaUsados.contains(pcomparendo)) {
+			prueba=(K) "usado";
+		}else {
+			listaUsados.add((Comparendo) pcomparendo);
+		}
+
+
+		return prueba;
+
 	}
-	
-	
-	return prueba;
-	
-}
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con el codigo de infraccion dado por parametro.
 	 * @param Pinfraccion infraccion que debe tener el comparendo
 	 *  * @return El primer comparendo que cumpla la condicion
 	 */
-	
-//parte B1
+
+	//parte B1
 	public Comparendo consultarPrimerComparendoPorInfraccion(String Pinfraccion) {
 
 		for (int i = 0; i < elementos.length; i++) {
@@ -301,10 +308,10 @@ public K codigoUsado(K pcomparendo) {
 	 * @param pInfrac codigo de infraccion que deben tener los comparendos
 	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
 	 */
-//parte B2
+	//parte B2
 	public String consultarComparendosCodigoInfracc(K pInfrac) {
-		arrayComparendofecha(pInfrac);
-		ordenadorArrayComparendoFecha(pInfrac);
+		arrayComparendoInfracc(pInfrac);
+		ordenadorComparedoInfracc(pInfrac);
 		String resp ="";
 		for (int i = 0; i < arrayComparendofecha(pInfrac).size(); i++) {
 			Comparendo act = arrayComparendofecha(pInfrac).get(i);
@@ -321,16 +328,38 @@ public K codigoUsado(K pcomparendo) {
 		return   resp;
 
 	}
+	public int consultarNumComparendosCodigoInfracc(ArrayList X, String act2) {
+		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
+
+		for (int j = 0; j < X.size(); j++) {
+			Comparendo act = (Comparendo) X.get(j);
+
+			K Y =(K) act.darInfraccion();
+
+			if (Y.equals(act2)) {
+				comparendoQueConcuerdan.add(act);
+			}
+
+
+
+		}
+
+		return comparendoQueConcuerdan.size();
+	}
+
+
+
+
 
 	/**
 	 * Comparar  los comparendos,por  cada  código de infraccion,en segun su tipo de servicio (particular o publico). 
 	 * La  comparación solicitada consiste  en mostrar  el total de  comparendos  de  cada  código   para cada tipo de servicio.
 	 *   @return total de comparendos segun tipo de servicio
 	 */
-//parte B3
+	//parte B3
 	public K compararComparendoCodigoSegunTipoServi() {
-		
-		
+
+
 		return null;
 
 	}
@@ -348,7 +377,7 @@ public K codigoUsado(K pcomparendo) {
 			Comparendo act = elementos[j];
 
 			K X =(K) act.darFecha();
-			
+
 			if (X.equals(Pfecha)) {
 				comparendoQueConcuerdan.add(act);
 			}
@@ -407,7 +436,7 @@ public K codigoUsado(K pcomparendo) {
 			Comparendo act = elementos[j];
 
 			K X =(K) act.darInfraccion();
-			
+
 			if (X.equals(pInfracc)) {
 				comparendoQueConcuerdan.add(act);
 			}
@@ -417,7 +446,7 @@ public K codigoUsado(K pcomparendo) {
 		}
 
 		return comparendoQueConcuerdan;
-		}
+	}
 
 
 
@@ -472,13 +501,13 @@ public K codigoUsado(K pcomparendo) {
 	 * @param N Numero de codigos que se va a buscar.
 	 * @return numero de comparendo mas frecuentes en un peiodo de tiempo
 	 */
-//parte C2
+	//parte C2
 	public K consultarNComparendosMayoresSegunPeriodoFecha(K N ,K fechaInicial, K fechaFinal) {
 		return N;
 
 	}
-	
-	
+
+
 	/**
 	 * Genera una gráfica ASCII (Histograma) que muestra el número total de comparendos por  cada  LOCALIDAD ,representados  por  un  String  de  caracteres  ‘*’. 
 	 * Los  nombres  de  las localidades deben aparecer alfabéticamente y deben justificarse a 16 caracteres.
@@ -502,7 +531,7 @@ public K codigoUsado(K pcomparendo) {
 		return respuesta;
 	}
 
-	
+
 
 }
 

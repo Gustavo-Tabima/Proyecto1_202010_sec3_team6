@@ -204,7 +204,6 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
 		String respuesta= "Infracción | "+fecha1+" | "+fecha2+"\n";
 
-		ArrayList<Comparendo> listaRespuesta= new ArrayList<Comparendo>();
 
 		ArrayList<Comparendo> listaFecha1= new ArrayList<Comparendo>();
 		ArrayList<Comparendo> listaFecha2= new ArrayList<Comparendo>();
@@ -358,7 +357,61 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	 */
 	//parte B3
 	public K compararComparendoCodigoSegunTipoServi() {
+		String respuesta= "Infracción | Particular |Público "+"\n";
 
+
+		ArrayList<Comparendo> listaParticular= new ArrayList<Comparendo>();
+		ArrayList<Comparendo> listaPublic= new ArrayList<Comparendo>();
+
+
+
+		for (int i = 0; i < elementos.length; i++) {
+			Comparendo actual = elementos[i];
+
+
+			if(actual.darClaseVehi().equals("Particular")) {
+				listaParticular.add(actual);
+			}
+			if(actual.darClaseVehi().equals("Público")) {
+				listaPublic.add(actual);
+			}
+		}	
+
+		for (int i = 0; i < listaParticular.size(); i++) {
+			int contador1=0;
+			int contador2=0;
+
+			String act = listaParticular.get(i).darInfraccion();
+			if (codigoUsado((K) act)==null) {
+				contador1=	consultarNumComparendosCodigoInfracc(listaParticular, act);
+				contador2= consultarNumComparendosCodigoInfracc(listaPublic, act);
+				if (contador1>0 && contador2>0) {
+					
+					 respuesta = act +"| "+contador1+" | "+contador2+"\n";
+					
+					
+				}
+			}
+
+
+
+
+
+		}
+
+
+
+		if (listaParticular.size()==0  ) {
+			
+			respuesta="No hay comparendos comunes";
+		
+		}
+		
+		if (listaPublic.size()==0) {
+			respuesta="No hay comparendos comunes";
+
+		}
+		
 
 		return null;
 

@@ -45,7 +45,7 @@ public class Modelo<K> {
 	 */
 	public Modelo()
 	{
-		datos = new ArregloDinamico(7);
+		datos = new ArregloDinamico();
 	}
 
 	/**
@@ -55,7 +55,8 @@ public class Modelo<K> {
 	public Modelo(int capacidad)
 	{
 
-		datos = new ArregloDinamico(capacidad);
+		datos = cargarDatos();
+		
 	}
 
 
@@ -165,7 +166,7 @@ public class Modelo<K> {
 	 * @return retorna el comparendo con mayor object id
 	 */
 	public String comparendoMayorObId() {
-		return null;
+	return datos.mostrarMayorId();
 	}
 
 

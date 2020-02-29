@@ -40,13 +40,13 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	//---------------------------------------------------------------------------------------------
 
 	/**
-	 * Crea un arreglo dinamico con un tamaño establecido.
+	 * Crea un arreglo dinamico 
 	 * 
 	 */
-	public ArregloDinamico( int Max)
+	public ArregloDinamico()
 	{
-		elementos = (Comparendo[]) new Comparable[Max];;
-		tamanoMax = Max;
+		elementos =  new Comparendo[20];
+		
 		tamanoAct = 0;
 	}
 
@@ -575,16 +575,55 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		return null;
 
 	}
-
+	
+	/**
+	 * 
+	 * Organiza los comparendos en orden de ID y al final retorna el String con mayor id como respuesta
+	 */
 	public String mostrarMayorId() {
 		String respuesta = "";
+		
+		int tam = elementos.length;
+		for (int i = 0; i < elementos.length; i++) {
+			int minInfrac = i; 
+            for (int j = i+1; j < tam; j++) 
+                if (elementos[j].darObjectId() < elementos[minInfrac].darObjectId()) 
+                    minInfrac = j; 
+            	
+            
+        	Comparendo temporal = elementos[minInfrac]; 
+            elementos[minInfrac] = elementos[i]; 
+            elementos[i] = temporal; 
+		}
+	
 
-
+		respuesta = elementos[elementos.length - 1].toString();
 
 		return respuesta;
 	}
 
+public void darZonaMinimax(double lowLong, double LowLat, double hLong, double hLat) {
+	
+}
 
-
+public double darlowLong() {
+	double lowLong = elementos[0].darLongitud();
+	
+	
+		int tam = elementos.length;
+		for (int i = 0; i < elementos.length; i++) {
+			int minInfrac = i; 
+            for (int j = i+1; j < tam; j++) 
+                if (elementos[j].darLongitud()< elementos[minInfrac].darLongitud()) 
+                    minInfrac = j; 
+            	
+            
+        	Comparendo temporal = elementos[minInfrac]; 
+            elementos[minInfrac] = elementos[i]; 
+           elementos[i] = temporal; 
+	}
+	return lowLong;
+	
+}
 }
 

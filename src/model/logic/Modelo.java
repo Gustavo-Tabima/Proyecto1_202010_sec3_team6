@@ -45,7 +45,7 @@ public class Modelo<K> {
 	 */
 	public Modelo()
 	{
-		datos = new ArregloDinamico();
+		datos = new ArregloDinamico(7);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class Modelo<K> {
 				double latitud = e.getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray()
 						.get(1).getAsDouble();
 
-				Comparable c = (Comparable) new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
+				Comparendo c = new Comparendo(OBJECTID, FECHA_HORA, DES_INFRAC, MEDIO_DETE, CLASE_VEHI, TIPO_SERVI, INFRACCION, LOCALIDAD, longitud, latitud);
 
 				datos.agregar(c);
 			}
@@ -118,9 +118,9 @@ public class Modelo<K> {
 	 * Requerimiento de agregar dato
 	 * @param dato
 	 */
-	public void agregar(String dato)
+	public void agregar(K dato)
 	{	
-		datos.agregar(dato);
+		  datos.agregar((Comparendo) dato);
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Modelo<K> {
 	 * @return numero de comparendos en la cola
 	 */
 	public int totalComparendosCola() {
-		return 0;
+		return datos.darTamano();
 
 	}
 	/** recorre los datos cargados en la cola y da el comparendo con mayor object ID
@@ -177,7 +177,180 @@ public class Modelo<K> {
 	 * @return retorna la zona min max
 	 */
 	public String zonaMinmax() {
-		return "";
+		return datos.darZonaMinimax(datos.darlowLong(),datos.darlowLat(),datos.darHlong(), datos.darHlat());	}
+	
+	
+	
+	
+	public String cargaID() {
+		return datos.mostrarMayorId();
 	}
+	
+	public String tablaFormato(String entrada) {
+		String[] formateado = entrada.split(";");
+		for (int i = 0; i < formateado.length; i++) {
+			String barraTabla = formateado[i] + " | " + formateado[i+1] + "/n";
+		return barraTabla;
+		}
+		return "Fin de la tabla";
+	}
+	
+	public String darInfraccionesSegunFecha() {
+		String respuesta = "";
+		
+		return respuesta;
+	}
+	/**
+	 * Consulta y devuelve el primer comparendo que encuentre con la localidad buscada.
+	 * @param Plocalidad localidad que debe tner el comparendo
+	 *  * @return El primer comparendo que cumpla la condicion
+	 */
+	//parte A1
+
+	public String consultarPrimerComparendoPorLocalidad(String Plocalidad) {
+
+
+	
+		return ""+datos.consultarPrimerComparendoPorLocalidad(Plocalidad);
+	}
+
+
+	/**
+	 * Consulta y devuelve los comparendos que encuentre segun una fecha de manera ordenada(mayor a menor segun codigo de infraccion).
+	 * @param Pfecha Fecha que deben tener los comparendos
+	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
+	 */
+	//parte A2
+
+	public String consultarComparendosFecha(K Pfecha) {
+		
+
+
+
+
+		return  ""+datos.consultarComparendosFecha((Date) Pfecha);
+
+	}
+
+
+
+	/**
+	 * Comparar  los comparendos,por  cada  código de infraccion,
+	 * en dos  fechas dadas. La  comparación solicitada consiste  en mostrar  el total de comparendos  de  cada  código   para las 2 fechas.
+	 * @param fecha1  Fecha que deben tener los comparendos
+	 * * @param fecha2  Fecha que deben tener los comparendos
+	 *  * @return total de cada tipo de comparendos en las fechas fecha
+	 */
+	//parte A3
+	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
+		
+		
+		return ""+datos.comparaComparendoCodigoSegunFechas(fecha1, fecha2);
+	}	
+
+	
+	/**
+	 * Consulta y devuelve el primer comparendo que encuentre con el codigo de infraccion dado por parametro.
+	 * @param Pinfraccion infraccion que debe tener el comparendo
+	 *  * @return El primer comparendo que cumpla la condicion
+	 */
+
+	//parte B1
+	public String consultarPrimerComparendoPorInfraccion(String Pinfraccion) {
+
+
+		return ""+datos.consultarPrimerComparendoPorInfraccion(Pinfraccion);
+
+
+
+	}
+
+
+	/**
+	 * Consulta y devuelve los comparendos que encuentre segun un codigo de infraccion de manera ordenada(menor a mayor segun fecha).
+	 * @param pInfrac codigo de infraccion que deben tener los comparendos
+	 *  * @return comparendos segun parametro y numero total de comparendo que cumplen la condicion
+	 */
+	//parte B2
+	public String consultarComparendosCodigoInfracc(K pInfrac) {
+		
+
+
+		return   ""+datos.consultarComparendosCodigoInfracc((String) pInfrac);
+
+	}
+
+
+
+
+
+
+	/**
+	 * Comparar  los comparendos,por  cada  código de infraccion,en segun su tipo de servicio (particular o publico). 
+	 * La  comparación solicitada consiste  en mostrar  el total de  comparendos  de  cada  código   para cada tipo de servicio.
+	 *   @return total de comparendos segun tipo de servicio
+	 */
+	//parte B3
+	public String compararComparendoCodigoSegunTipoServi() {
+	
+
+		return ""+datos.compararComparendoCodigoSegunTipoServi();
+
+	}
+
+	
+
+
+	
+
+	/**
+	 * Muestra el numero de comparendos por cada código de infraccion en una localidad dada,
+	 *  para un periodo de tiempo dado por: fecha inicial y final.
+	 *  Los  resultados  deben  ser  presentados  de  manera  alfabeticamente ordenada.
+	 * @param fechaInicial Fecha inicial del periodo de tiempo.
+	 * @param fechaFinal Fecha final del periodo de tiempo
+	 * @param pLocalidad Localidad dada por parametro
+	 * @return numero de comparendo dados por localidad en un peiodo de tiempo
+	 */
+	//parte C1
+	public String NumerodeComparendosCodigoSegunLocalidad(K pLocalidad, K fechaInicial, K fechaFinal ) {
+		return ""+datos.NumerodeComparendosCodigoSegunLocalidad(pLocalidad, fechaInicial, fechaFinal);
+
+	}
+
+
+	/**
+	 * Muestra numero dado de codigos de infraccion mas frecuente en un periodo de tiempo dado,
+	 *  Los  resultados  deben  ser  presentados  en formato de tabla
+	 * @param fechaInicial Fecha inicial del periodo de tiempo.
+	 * @param fechaFinal Fecha final del periodo de tiempo
+	 * @param N Numero de codigos que se va a buscar.
+	 * @return numero de comparendo mas frecuentes en un peiodo de tiempo
+	 */
+	//parte C2
+	public String consultarNComparendosMayoresSegunPeriodoFecha(K N ,K fechaInicial, K fechaFinal) {
+		
+		return (String) datos.consultarNComparendosMayoresSegunPeriodoFecha(N, fechaInicial, fechaFinal);
+
+	}
+
+
+	/**
+	 * Genera una gráfica ASCII (Histograma) que muestra el número total de comparendos por  cada  LOCALIDAD ,representados  por  un  String  de  caracteres  ‘*’. 
+	 * Los  nombres  de  las localidades deben aparecer alfabéticamente y deben justificarse a 16 caracteres.
+	 * Cada ‘*’corresponde   a   50   comparendos. 
+	 * Para   una   localidad,   si   su   residuo del   total   de comparendos al  dividir  entre  50  es  un  número  mayor  a  0,
+	 *   este  residuo  corresponde también a  un ‘*’.
+	 * @return gráfica ASCII
+	 */
+	//parte C3
+
+	public String GeneradorHistrogramaASCIINUmTotalSegunLocalidad() {
+		return ""+datos.GeneradorHistrogramaASCIINUmTotalSegunLocalidad();
+
+	}
+	
+	
+	
 
 }

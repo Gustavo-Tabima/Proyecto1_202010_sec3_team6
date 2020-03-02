@@ -94,6 +94,14 @@ public class Controller {
 					fin = true;
 					break;	
 
+				
+					
+					
+					
+				case 10:
+					view.printMessage("Infracción | Comparendos");
+					view.printMessage(modelo.tablaFormato(modelo.darInfraccionesSegunFecha()));
+
 				default: 
 					view.printMessage("--------- \n Opcion Invalida !! \n---------");
 					break;

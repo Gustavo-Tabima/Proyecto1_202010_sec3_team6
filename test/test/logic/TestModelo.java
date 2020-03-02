@@ -14,17 +14,13 @@ public class TestModelo {
 	@Before
 	public void setUp1() {
 		modelo= new Modelo(CAPACIDAD);
+		modelo.cargarDatos();
 	}
 
-	public void setUp2() {
-		for(int i =0; i< CAPACIDAD;i++){
-			modelo.agregar(""+i);
-		}
-	}
-
+	
 	@Test
 	public void testModelo() {
-		assertTrue(modelo!=null);
+		setUp1();		
 		assertEquals(0, modelo.darTamano());  // Modelo con 0 elementos presentes.
 	}
 
@@ -40,13 +36,13 @@ public class TestModelo {
 
 	@Test
 	public void testBuscar() {
-		setUp2();
+		
 		// TODO Completar la prueba
 	}
 
 	@Test
 	public void testEliminar() {
-		setUp2();
+		
 		// TODO Completar la prueba
 		
 	}

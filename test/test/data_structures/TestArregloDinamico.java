@@ -16,8 +16,8 @@ public class TestArregloDinamico<K> {
 	private ArregloDinamico<Comparendo> arreglo;
 	private static int TAMANO=100;
 	private K prueba;
-	private Date fevcha= new Date(2019,12,12);
-	private Date fevcha2= new Date(2019,12,12);
+	private Date fevcha= new Date();
+	private Date fevcha2= new Date();
 
 	private Comparendo Compa =  new Comparendo(0, fevcha, "Lmao", "lapiz", "moto", "Particular", "635", "runaterra", 0, 0);
 	private Comparendo Compa2 =  new Comparendo(0, fevcha2, "choque", "lapiz", "carro", "Particular", "C35", "bogota", 0, 0);
@@ -49,6 +49,22 @@ public class TestArregloDinamico<K> {
 		Object x = arreglo.darElemento(0);
 
 		assertEquals("NO se agrega el comparendo de manera correcta",x,Compa);
+
+	}
+	
+	@Test
+	public void testDarfecha() {
+		setUp1();
+		Object x = arreglo.darElemento(0).darFecha();
+
+		assertEquals("NO se agrega el comparendo de manera correcta",x,fevcha);
+
+	}@Test
+	public void testDarcod() {
+		setUp1();
+		Object x = arreglo.darElemento(0).darInfraccion();
+
+		assertEquals("NO se agrega el comparendo de manera correcta",x,"635");
 
 	}
 	
@@ -85,7 +101,6 @@ public class TestArregloDinamico<K> {
 	public void testConsultarComparendosFecha() {
 		setUp1();
 		String x = arreglo.consultarComparendosFecha(fevcha);
-		assertEquals(x, x);
 		assertEquals("NO da lo esperado",x,0);
 
 	}
@@ -93,9 +108,9 @@ public class TestArregloDinamico<K> {
 	//A3
 	public void testComparaComparendoCodigoSegunFechas() {
 		setUp1();
-		String x = arreglo.comparaComparendoCodigoSegunFechas(fevcha, fevcha);
+		 arreglo.comparaComparendoCodigoSegunFechas(fevcha, fevcha2);
 
-		assertEquals("NO da lo esperado",x,1);
+		assertEquals("NO da lo esperado",arreglo.comparaComparendoCodigoSegunFechas(fevcha, fevcha2),"hola");
 
 	
 	}
@@ -114,16 +129,16 @@ public class TestArregloDinamico<K> {
 		setUp1();
 		
 String X = arreglo.consultarComparendosCodigoInfracc("635");
-		assertEquals("NO da resultado esperado",X,X);
+		assertEquals("NO da resultado esperado",X,1);
 
 	}
 	@Test
 	//B3
 	public void testcompararComparendoCodigoSegunTipoServi() {
 		setUp1();
-		arreglo.darElemento(0);
+		Comparendo x = arreglo.compararComparendoCodigoSegunTipoServi();
 
-		assertEquals("NO da elemento correctamente",1,1);
+		assertEquals("NO da elemento correctamente",x,x);
 
 	}
 //	@Test

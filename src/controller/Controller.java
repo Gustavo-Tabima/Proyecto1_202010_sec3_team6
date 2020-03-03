@@ -2,6 +2,7 @@ package controller;
 
 import java.util.Scanner;
 
+import model.data_structures.ArregloDinamico;
 import model.logic.Modelo;
 import view.View;
 
@@ -39,8 +40,9 @@ public class Controller {
 					view.printMessage("--------- \nCrear Arreglo \nDar capacidad inicial del arreglo: ");
 				
 				    modelo = new Modelo(); 
+				  ArregloDinamico x = modelo.cargarDatos();
 				    view.printMessage("Arreglo Dinamico creado");
-				    view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");
+				    view.printMessage("Numero actual de elementos " + x.darTamano() + "\n---------");
 
 					break;
 
@@ -85,6 +87,7 @@ public class Controller {
 				case 5: 
 					view.printMessage("--------- \nContenido del Arreglo: ");
 					view.printModelo(modelo);
+					view.printMessage(modelo.imprimirArregloEntero());
 					view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
 					break;	
 					

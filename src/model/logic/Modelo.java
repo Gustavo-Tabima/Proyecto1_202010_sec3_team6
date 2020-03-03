@@ -56,7 +56,7 @@ public class Modelo<K> {
 	{
 
 		datos = cargarDatos();
-		
+
 	}
 
 
@@ -104,7 +104,7 @@ public class Modelo<K> {
 			e.printStackTrace();
 		}
 		return datos;	}
-	
+
 	/**
 	 * Servicio de consulta de numero de elementos presentes en el modelo 
 	 * @return numero de elementos presentes en el modelo
@@ -120,7 +120,7 @@ public class Modelo<K> {
 	 */
 	public void agregar(K dato)
 	{	
-		  datos.agregar((Comparendo) dato);
+		datos.agregar((Comparendo) dato);
 	}
 
 	/**
@@ -155,6 +155,9 @@ public class Modelo<K> {
 
 	}
 
+	public String imprimirArregloEntero(){
+return "" + datos.imprimirTodo();
+	}
 	/** recorre los datos cargados en la cola y da el numero total de cuantos hay
 	 * @return numero de comparendos en la cola
 	 */
@@ -166,7 +169,7 @@ public class Modelo<K> {
 	 * @return retorna el comparendo con mayor object id
 	 */
 	public String comparendoMayorObId() {
-	return datos.mostrarMayorId();
+		return datos.mostrarMayorId();
 	}
 
 
@@ -178,26 +181,26 @@ public class Modelo<K> {
 	 */
 	public String zonaMinmax() {
 		return datos.darZonaMinimax(datos.darlowLong(),datos.darlowLat(),datos.darHlong(), datos.darHlat());	}
-	
-	
-	
-	
+
+
+
+
 	public String cargaID() {
 		return datos.mostrarMayorId();
 	}
-	
+
 	public String tablaFormato(String entrada) {
 		String[] formateado = entrada.split(";");
 		for (int i = 0; i < formateado.length; i++) {
 			String barraTabla = formateado[i] + " | " + formateado[i+1] + "/n";
-		return barraTabla;
+			return barraTabla;
 		}
 		return "Fin de la tabla";
 	}
-	
+
 	public String darInfraccionesSegunFecha() {
 		String respuesta = "";
-		
+
 		return respuesta;
 	}
 	/**
@@ -210,7 +213,7 @@ public class Modelo<K> {
 	public String consultarPrimerComparendoPorLocalidad(String Plocalidad) {
 
 
-	
+
 		return ""+datos.consultarPrimerComparendoPorLocalidad(Plocalidad);
 	}
 
@@ -223,7 +226,7 @@ public class Modelo<K> {
 	//parte A2
 
 	public String consultarComparendosFecha(K Pfecha) {
-		
+
 
 
 
@@ -242,13 +245,13 @@ public class Modelo<K> {
 	 *  * @return total de cada tipo de comparendos en las fechas fecha
 	 */
 	//parte A3
-	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
-		
-		
-		return ""+datos.comparaComparendoCodigoSegunFechas(fecha1, fecha2);
-	}	
+	//	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
+	//		
+	//		
+	//		return ""+datos.comparaComparendoCodigoSegunFechas(fecha1, fecha2);
+	//	}	
 
-	
+
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con el codigo de infraccion dado por parametro.
 	 * @param Pinfraccion infraccion que debe tener el comparendo
@@ -273,7 +276,7 @@ public class Modelo<K> {
 	 */
 	//parte B2
 	public String consultarComparendosCodigoInfracc(K pInfrac) {
-		
+
 
 
 		return   ""+datos.consultarComparendosCodigoInfracc((String) pInfrac);
@@ -292,16 +295,16 @@ public class Modelo<K> {
 	 */
 	//parte B3
 	public String compararComparendoCodigoSegunTipoServi() {
-	
+
 
 		return ""+datos.compararComparendoCodigoSegunTipoServi();
 
 	}
 
-	
 
 
-	
+
+
 
 	/**
 	 * Muestra el numero de comparendos por cada código de infraccion en una localidad dada,
@@ -329,7 +332,7 @@ public class Modelo<K> {
 	 */
 	//parte C2
 	public String consultarNComparendosMayoresSegunPeriodoFecha(K N ,K fechaInicial, K fechaFinal) {
-		
+
 		return (String) datos.consultarNComparendosMayoresSegunPeriodoFecha(N, fechaInicial, fechaFinal);
 
 	}
@@ -349,8 +352,8 @@ public class Modelo<K> {
 		return ""+datos.GeneradorHistrogramaASCIINUmTotalSegunLocalidad();
 
 	}
-	
-	
-	
+
+
+
 
 }

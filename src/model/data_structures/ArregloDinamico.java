@@ -46,7 +46,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	public ArregloDinamico( int Max)
 	{
 
-		elementos = (Comparendo[]) new Comparable[Max];;
+		elementos =  new Comparendo[Max];;
 		tamanoMax = Max;
 
 		elementos =  new Comparendo[20];
@@ -64,7 +64,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		{  // caso de arreglo lleno (aumentar tamaNo)
 			tamanoMax = 2 * tamanoMax;
 			Object [ ] copia = elementos;
-			elementos = (Comparendo[]) new Comparable[tamanoMax];
+			elementos = (Comparendo[]) new Comparendo[tamanoMax];
 			for ( int i = 0; i < tamanoAct; i++)
 			{
 				elementos[i] = (Comparendo) copia[i];
@@ -207,32 +207,31 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	//nota no esta terminado este ;v
 	@SuppressWarnings("unchecked")
 	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
-		String respuesta= "Infracciï¿½n | "+fecha1+" | "+fecha2+"\n";
-
-		ArrayList<Comparendo> listaRespuesta= new ArrayList<Comparendo>();
-
-		ArrayList<Comparendo> listaFecha1= new ArrayList<Comparendo>();
-		ArrayList<Comparendo> listaFecha2= new ArrayList<Comparendo>();
+		String respuesta= "Infraccion | "+fecha1+" | "+fecha2+"\n";
 
 
+		ArrayList<String> listaFecha1= new ArrayList();
+		ArrayList<String> listaFecha2= new ArrayList();
 
-		for (int i = 0; i < elementos.length; i++) {
+
+
+		for (int i = 0; i <= elementos.length; i++) {
 			Comparendo actual = elementos[i];
-
-
 			if(actual.darFecha().equals(fecha1)) {
-				listaFecha1.add(actual);
+				listaFecha1.add(actual.darInfraccion());
 			}
 			if(actual.darFecha().equals(fecha2)) {
-				listaFecha2.add(actual);
+				listaFecha2.add(actual.darDesInfraccion());
 			}
+
+			
 		}	
 
 		for (int i = 0; i < listaFecha1.size(); i++) {
 			int contador1=0;
 			int contador2=0;
 
-			String act = listaFecha1.get(i).darInfraccion();
+			String act = listaFecha1.get(i);
 			if (codigoUsado((K) act)==null) {
 				contador1=	consultarNumComparendosCodigoInfracc(listaFecha1, act);
 				contador2= consultarNumComparendosCodigoInfracc(listaFecha2, act);
@@ -268,13 +267,13 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 	public K codigoUsado(K pcomparendo) {
 		K prueba = null;
-		ArrayList<Comparendo> listaUsados= new ArrayList<Comparendo>();
+		ArrayList listaUsados= new ArrayList();
 
 
 		if (listaUsados.contains(pcomparendo)) {
 			prueba=(K) "usado";
 		}else {
-			listaUsados.add((Comparendo) pcomparendo);
+			listaUsados.add( pcomparendo);
 		}
 
 
@@ -292,8 +291,8 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 		for (int i = 0; i < elementos.length; i++) {
 			Comparendo act = elementos[i];
-			String X = act.darLocalidad();
-			if (X.equals(Pinfraccion)) {
+		
+			if (elementos[i].darInfraccion().contentEquals(Pinfraccion)) {
 				System.out.println("Primer comparendo con localidad indicada "+act);
 				return act;
 			}
@@ -364,7 +363,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	//parte B3
 	public K compararComparendoCodigoSegunTipoServi() {
 
-		String respuesta= "Infracciï¿½n | Particular |Pï¿½blico "+"\n";
+		String respuesta= "Infraccion | Particular |Publico "+"\n";
 
 
 		ArrayList<Comparendo> listaParticular= new ArrayList<Comparendo>();
@@ -379,7 +378,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 			if(actual.darClaseVehi().equals("Particular")) {
 				listaParticular.add(actual);
 			}
-			if(actual.darClaseVehi().equals("Pï¿½blico")) {
+			if(actual.darClaseVehi().equals("Publico")) {
 				listaPublic.add(actual);
 			}
 		}	
@@ -433,12 +432,12 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
 
 		for (int j = 0; j < elementos.length; j++) {
-			Comparendo act = elementos[j];
+			
 
-			K X =(K) act.darFecha();
+			
 
-			if (X.equals(Pfecha)) {
-				comparendoQueConcuerdan.add(act);
+			if (elementos[j].darFecha().equals(Pfecha)) {
+				comparendoQueConcuerdan.add(elementos[j]);
 			}
 
 
@@ -765,7 +764,97 @@ public int darnumerodeInfracciones(String codigoInfrac, ArrayList<Comparendo> en
 	}
 	return numero;
 }
+public void generarhistograma(){
 
+
+}
+
+public int contadordeInfraccionesPorLocalidad(){
+	int numero = 0;
+for (int i = 0; i < elementos.length; i++) {
+		if(elementos[i].darLocalidad().equals(darlistaLocalidades().get(i))){
+
+		}
+	}
+
+	return numero;
+}
+
+public ArrayList<String> darlistaLocalidades(){
+	ArrayList<String> lista = new ArrayList<>();
+
+	for (int i = 0; i < elementos.length; i++) {
+		if(NoestaRepetida(elementos[i].darLocalidad(),lista)){
+			lista.add(elementos[i].darLocalidad());
+		}
+	}
+	return lista;
+}
+
+public Boolean NoestaRepetida(String entrada,ArrayList<String> comparador){
+	Boolean respuesta = true;
+	for (int i = 0; i < comparador.size(); i++) {
+		if(entrada.equals(comparador.get(i))){
+			respuesta = false;
+		}
+	}
+	return respuesta;
+}
+
+
+
+public String rankingDeInfractores(Date pini, Date pfini,int rank){
+	String respuesta = "";
+
+
+	int contador = 0;
+	ArrayList<Comparendo> parametros = new ArrayList<Comparendo>();
+	for (int i = 0; i < elementos.length; i++) {
+		if(elementos[i].darFecha().compareTo(pini) == 0 && elementos[i].darFecha().compareTo(pfini) == -1  ||
+				elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == -1 ||
+				elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == 0) {
+			parametros.add(elementos[i]);
+		}
+	}
+	int[] ranks = new int[rank-1];
+	int k = 0;
+	int topeInfracción = 0;
+	int posMayorInfrac = 0;
+	String[] ranksTipo = new String[rank-1];
+
+	int n = parametros.size(); 
+	for (int i = 0; i < parametros.size()- 1; i++) {
+		int pos = i;
+
+		for (int j = i + 1; j <= parametros.size(); j++) {
+			if (darnumerodeInfracciones(parametros.get(j).darInfraccion(),parametros) < darnumerodeInfracciones(parametros.get(pos).darInfraccion(),parametros))
+				pos = j;
+
+
+			Comparendo min = parametros.get(pos);
+			parametros.set(i,min);
+			min = parametros.get(i);
+		}
+	}
+	int z = 0;
+	while(z < rank){
+		ranks[z] = darnumerodeInfracciones(parametros.get(z).darInfraccion(),parametros);
+		ranksTipo[z] = parametros.get(z).darInfraccion();
+		z++;
+		respuesta += ranksTipo[z] + ";" + ranks[z];
+	}
+
+	return respuesta;
+}
+
+public String imprimirTodo() {
+	// TODO Auto-generated method stub
+	String resp="";
+	for (int i = 0; i < elementos.length; i++) {
+		resp=resp +elementos[i]+"\n";
+	}
+	return resp;
+}
 
 
 }

@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.Date;
 import java.util.Scanner;
 
 import model.data_structures.ArregloDinamico;
@@ -35,6 +36,7 @@ public class Controller {
 			view.printMenu();
 
 			int option = lector.nextInt();
+			int datoi;
 			switch(option){
 				case 1:
 					view.printMessage("--------- \nCrear Arreglo \nDar capacidad inicial del arreglo: ");
@@ -85,26 +87,116 @@ public class Controller {
 					break;
 
 				case 5: 
-					view.printMessage("--------- \nContenido del Arreglo: ");
+					view.printMessage("--------- \nTotal de comparendos en el archivo: ");
+					view.printModelo(modelo);
+					view.printMessage(modelo.totalComparendos()+"");
+					break;	
+					
+				case 6: 
+					view.printMessage("--------- \nComparendo con mayor ID: ");
+					view.printModelo(modelo);
+					view.printMessage(modelo.comparendoMayorObId());
+					break;
+
+				case 7: 
+					view.printMessage("--------- \nZona min-max: ");
+					view.printModelo(modelo);
+					view.printMessage(modelo.zonaMinmax());
+					break;
+					
+				case 8: 
+					view.printMessage("--------- \n A1)Primer Comparendo Por Localidad dada:\n---------"); 
+					view.printModelo(modelo);
+					dato = lector.next();
+					view.printMessage(modelo.consultarPrimerComparendoPorLocalidad(dato));
+					break;	
+					
+				case 9: 
+						view.printMessage("--------- \n consultarComparendos Fecha dada: \n---------"); 
+						view.printModelo(modelo);
+						dato = lector.next();
+						view.printMessage(modelo.consultarComparendosFecha(dato));
+						break;		
+					
+				case 10: 
+					view.printMessage("--------- \n A3) comparar Codigo Comparendos con Fechas dadas:\n---------"); 
+					view.printModelo(modelo);
+					dato = lector.next();
+					
+					break;				
+				
+				case 11: 
+					view.printMessage("--------- \n B1)consulta PrimerComparendo Por codigo de Infraccion dado\n---------"); 
+					view.printModelo(modelo);
+					dato = lector.next();
+
+					view.printMessage(modelo.consultarPrimerComparendoPorInfraccion(dato));
+
+					break;
+					
+				case 12: 
+					view.printMessage("--------- \n B2)consultar Comparendos  con  CodigoInfraccion dado: \n---------"); 
+					view.printModelo(modelo);
+					dato = lector.next();
+					view.printMessage(modelo.consultarPrimerComparendoPorInfraccion(dato));
+					break;
+					
+				case 13: 
+						view.printMessage("--------- \n B3)comparar Comparendo SegunTipo Servicio: \n---------"); 
+						view.printMessage(modelo.compararComparendoCodigoSegunTipoServi());
+
+						break;	
+						
+				case 14: 
+							view.printMessage("--------- \n C1) número de comparendos por cada código INFRACCION en una LOCALIDAD dada, para un periodo de tiempo dado \n---------"); 
+							
+							String fechaI = lector.next();
+							Date i= new Date(fechaI);
+							String fechaf = lector.next();
+							Date f= new Date(fechaf);
+							dato=lector.next();
+							view.printMessage(modelo.NumerodeComparendosCodigoSegunLocalidad(i, f, dato));
+
+							break;	
+							
+				case 15: 
+								view.printMessage("--------- \n C2)Consultar   la   informacion   de   los   N códigos   INFRACCION   con   más   infracciones ordenados  de  mayor  a  menor  en  un  periodo  de  tiempo  dado \n---------"); 
+								
+								view.printMessage("numero del top:");
+
+								datoi= lector.nextInt();
+								String fechag = lector.next();
+								Date g= new Date(fechag);
+								String fechap = lector.next();
+								Date p= new Date(fechap);
+								dato=lector.next();
+								view.printMessage(modelo.consultarNComparendosMayoresSegunPeriodoFecha(datoi, g, p));
+								
+								
+								break;
+								
+				case 16: 
+									view.printMessage("--------- \n C3)Generar una gráfica ASCII (Histograma) que muestre el numero total de comparendos por  cada  LOCALIDAD \n---------"); 
+									view.printMessage(modelo.GeneradorHistrogramaASCIINUmTotalSegunLocalidad());
+									break;	
+									
+				case 17: 
+					view.printMessage("--------- \n IMpresion del arreglo: ");
 					view.printModelo(modelo);
 					view.printMessage(modelo.imprimirArregloEntero());
 					view.printMessage("Numero actual de elementos " + modelo.darTamano() + "\n---------");						
 					break;	
 					
-				case 6: 
+										
+				case 18:
 					view.printMessage("--------- \n Hasta pronto !! \n---------"); 
 					lector.close();
 					fin = true;
 					break;	
+					
+					
 
-				
 					
-					
-					
-				case 10:
-					view.printMessage("Infracción | Comparendos");
-					view.printMessage(modelo.tablaFormato(modelo.darInfraccionesSegunFecha()));
-
 				default: 
 					view.printMessage("--------- \n Opcion Invalida !! \n---------");
 					break;

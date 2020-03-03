@@ -142,13 +142,15 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		return null;
 
 	}
-
+	//------------------------------------------------------
+		//Metodos parte A
+		//-----------------------------------
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con la localidad buscada.
 	 * @param Plocalidad localidad que debe tner el comparendo
 	 *  * @return El primer comparendo que cumpla la condicion
 	 */
-	//parte A3
+	//parte A1
 
 	public Comparendo consultarPrimerComparendoPorLocalidad(String Plocalidad) {
 
@@ -224,7 +226,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 				listaFecha2.add(actual.darDesInfraccion());
 			}
 
-			
+
 		}	
 
 		for (int i = 0; i < listaFecha1.size(); i++) {
@@ -280,6 +282,10 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		return prueba;
 
 	}
+	
+	//------------------------------------------------------
+		//Metodos parte B
+		//-----------------------------------
 	/**
 	 * Consulta y devuelve el primer comparendo que encuentre con el codigo de infraccion dado por parametro.
 	 * @param Pinfraccion infraccion que debe tener el comparendo
@@ -291,7 +297,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 		for (int i = 0; i < elementos.length; i++) {
 			Comparendo act = elementos[i];
-		
+
 			if (elementos[i].darInfraccion().contentEquals(Pinfraccion)) {
 				System.out.println("Primer comparendo con localidad indicada "+act);
 				return act;
@@ -319,7 +325,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		String resp ="";
 		for (int i = 0; i < arrayComparendofecha((K) string).size(); i++) {
 			Comparendo act = arrayComparendofecha((K) string).get(i);
-			resp=resp + act.darObjectId()+"," + act.darFecha()+act.darInfraccion()+"," +act.darClaseVehi()+"," +act.darTipoServi()+"," +act.darLocalidad()+"\n";
+			resp=resp + act+"\n";
 
 		}
 
@@ -432,9 +438,9 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
 
 		for (int j = 0; j < elementos.length; j++) {
-			
 
-			
+
+
 
 			if (elementos[j].darFecha().equals(Pfecha)) {
 				comparendoQueConcuerdan.add(elementos[j]);
@@ -535,53 +541,9 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		}
 	}
 
-	/**
-	 * Muestra el numero de comparendos por cada cï¿½digo de infraccion en una localidad dada,
-	 *  para un periodo de tiempo dado por: fecha inicial y final.
-	 *  Los  resultados  deben  ser  presentados  de  manera  alfabeticamente ordenada.
-	 * @param fechaInicial Fecha inicial del periodo de tiempo.
-	 * @param fechaFinal Fecha final del periodo de tiempo
-	 * @param pLocalidad Localidad dada por parametro
-	 * @return numero de comparendo dados por localidad en un peiodo de tiempo
-	 */
-	//parte C1
-	public K NumerodeComparendosCodigoSegunLocalidad(K pLocalidad, K fechaInicial, K fechaFinal ) {
-		return null;
-
-	}
-
-
-	/**
-	 * Muestra numero dado de codigos de infraccion mas frecuente en un periodo de tiempo dado,
-	 *  Los  resultados  deben  ser  presentados  en formato de tabla
-	 * @param fechaInicial Fecha inicial del periodo de tiempo.
-	 * @param fechaFinal Fecha final del periodo de tiempo
-	 * @param N Numero de codigos que se va a buscar.
-	 * @return numero de comparendo mas frecuentes en un peiodo de tiempo
-	 */
-	//parte C2
-	public K consultarNComparendosMayoresSegunPeriodoFecha(K N ,K fechaInicial, K fechaFinal) {
-		return N;
-
-	}
-
-
-	/**
-	 * Genera una grï¿½fica ASCII (Histograma) que muestra el nï¿½mero total de comparendos por  cada  LOCALIDAD ,representados  por  un  String  de  caracteres  ï¿½*ï¿½. 
-	 * Los  nombres  de  las localidades deben aparecer alfabï¿½ticamente y deben justificarse a 16 caracteres.
-	 * Cada ï¿½*ï¿½corresponde   a   50   comparendos. 
-	 * Para   una   localidad,   si   su   residuo del   total   de comparendos al  dividir  entre  50  es  un  nï¿½mero  mayor  a  0,
-	 *   este  residuo  corresponde tambiï¿½n a  un ï¿½*ï¿½.
-	 * @return grï¿½fica ASCII
-	 */
-	//parte C3
-
-	public K GeneradorHistrogramaASCIINUmTotalSegunLocalidad() {
-		return null;
-
-	}
-
-
+	//------------------------------------------------------
+		//Metodos parte Carga
+		//-----------------------------------
 	/**
 	 * 
 	 * Organiza los comparendos en orden de ID y al final retorna el String con mayor id como respuesta
@@ -696,7 +658,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	}
 
 
-	
+
 	//------------------------------------------------------
 	//Metodos parte C
 	//-----------------------------------
@@ -711,15 +673,15 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 				parametros.add(elementos[i]);
 			}
 		}
-		
+
 		while (parametros.size()> contador) {
 			if(parametros.get(contador).darLocalidad().compareTo(local) != 0) {
 				parametros.remove(contador);
 			}
 			contador++;
-			
+
 		}
-		
+
 		if(!parametros.isEmpty()) {
 			contador = 0;
 			while(contador < parametros.size()) {
@@ -728,10 +690,10 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		}
 		return respuesta;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**Dar la mayor longitud de todos los comparendos del arreglo.
 	 *
 	 * @return la mayor longitud de los comparendos
@@ -754,107 +716,134 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		return hlong;
 	}
 
-public int darnumerodeInfracciones(String codigoInfrac, ArrayList<Comparendo> entrada) {
-	int numero = 0;
-	for (int i = 0; i < entrada.size(); i++) {
-		if(entrada.get(i).darInfraccion().equalsIgnoreCase(codigoInfrac)) {
-			numero++;
-		}
-		
-	}
-	return numero;
-}
-public void generarhistograma(){
-
-
-}
-
-public int contadordeInfraccionesPorLocalidad(){
-	int numero = 0;
-for (int i = 0; i < elementos.length; i++) {
-		if(elementos[i].darLocalidad().equals(darlistaLocalidades().get(i))){
+	public int darnumerodeInfracciones(String codigoInfrac, ArrayList<Comparendo> entrada) {
+		int numero = 0;
+		for (int i = 0; i < entrada.size(); i++) {
+			if(entrada.get(i).darInfraccion().equalsIgnoreCase(codigoInfrac)) {
+				numero++;
+			}
 
 		}
+		return numero;
 	}
 
-	return numero;
-}
+	public String generarhistograma(ArrayList<String> listalocalidades){
+		String respuesta = "";
+		int z = 0;
+		int reps = 0;
+		String asteriscos = "";
+		while (z < listalocalidades.size()) {
+			int j = 0;
+			reps =	darRepeticionesLocal(listalocalidades.get(z));
+			int numeroasteristicos = reps%50;
+			while (j < numeroasteristicos) {
 
-public ArrayList<String> darlistaLocalidades(){
-	ArrayList<String> lista = new ArrayList<>();
+				asteriscos += "*";
+			}
 
-	for (int i = 0; i < elementos.length; i++) {
-		if(NoestaRepetida(elementos[i].darLocalidad(),lista)){
-			lista.add(elementos[i].darLocalidad());
+			return listalocalidades.get(z) + asteriscos;
 		}
-	}
-	return lista;
-}
+		return respuesta;		}
 
-public Boolean NoestaRepetida(String entrada,ArrayList<String> comparador){
-	Boolean respuesta = true;
-	for (int i = 0; i < comparador.size(); i++) {
-		if(entrada.equals(comparador.get(i))){
-			respuesta = false;
+
+	public int darRepeticionesLocal(String local) {
+		int reps = 0;
+		for (int i = 0; i < elementos.length; i++) {
+			if(elementos[i].darLocalidad().equals(local)) {
+				reps++;
+			}
 		}
+
+
+
+		return reps;
 	}
-	return respuesta;
-}
+	public int contadordeInfraccionesPorLocalidad(){
+		int numero = 0;
+		for (int i = 0; i < elementos.length; i++) {
+			if(elementos[i].darLocalidad().equals(darlistaLocalidades().get(i))){
 
-
-
-public String rankingDeInfractores(Date pini, Date pfini,int rank){
-	String respuesta = "";
-
-
-	int contador = 0;
-	ArrayList<Comparendo> parametros = new ArrayList<Comparendo>();
-	for (int i = 0; i < elementos.length; i++) {
-		if(elementos[i].darFecha().compareTo(pini) == 0 && elementos[i].darFecha().compareTo(pfini) == -1  ||
-				elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == -1 ||
-				elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == 0) {
-			parametros.add(elementos[i]);
+			}
 		}
+
+		return numero;
 	}
-	int[] ranks = new int[rank-1];
-	int k = 0;
-	int topeInfracción = 0;
-	int posMayorInfrac = 0;
-	String[] ranksTipo = new String[rank-1];
 
-	int n = parametros.size(); 
-	for (int i = 0; i < parametros.size()- 1; i++) {
-		int pos = i;
+	public ArrayList<String> darlistaLocalidades(){
+		ArrayList<String> lista = new ArrayList<>();
 
-		for (int j = i + 1; j <= parametros.size(); j++) {
-			if (darnumerodeInfracciones(parametros.get(j).darInfraccion(),parametros) < darnumerodeInfracciones(parametros.get(pos).darInfraccion(),parametros))
-				pos = j;
-
-
-			Comparendo min = parametros.get(pos);
-			parametros.set(i,min);
-			min = parametros.get(i);
+		for (int i = 0; i < elementos.length; i++) {
+			if(NoestaRepetida(elementos[i].darLocalidad(),lista)){
+				lista.add(elementos[i].darLocalidad());
+			}
 		}
-	}
-	int z = 0;
-	while(z < rank){
-		ranks[z] = darnumerodeInfracciones(parametros.get(z).darInfraccion(),parametros);
-		ranksTipo[z] = parametros.get(z).darInfraccion();
-		z++;
-		respuesta += ranksTipo[z] + ";" + ranks[z];
+		return lista;
 	}
 
-	return respuesta;
-}
-
-public String imprimirTodo() {
-	// TODO Auto-generated method stub
-	String resp="";
-	for (int i = 0; i < elementos.length; i++) {
-		resp=resp +elementos[i]+"\n";
+	public Boolean NoestaRepetida(String entrada,ArrayList<String> comparador){
+		Boolean respuesta = true;
+		for (int i = 0; i < comparador.size(); i++) {
+			if(entrada.equals(comparador.get(i))){
+				respuesta = false;
+			}
+		}
+		return respuesta;
 	}
-	return resp;
-}
+
+
+
+	public String rankingDeInfractores(Date pini, Date pfini,int rank){
+		String respuesta = "";
+
+
+		int contador = 0;
+		ArrayList<Comparendo> parametros = new ArrayList<Comparendo>();
+		for (int i = 0; i < elementos.length; i++) {
+			if(elementos[i].darFecha().compareTo(pini) == 0 && elementos[i].darFecha().compareTo(pfini) == -1  ||
+					elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == -1 ||
+					elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == 0) {
+				parametros.add(elementos[i]);
+			}
+		}
+		int[] ranks = new int[rank-1];
+		int k = 0;
+		int topeInfracción = 0;
+		int posMayorInfrac = 0;
+		String[] ranksTipo = new String[rank-1];
+
+		int n = parametros.size(); 
+		for (int i = 0; i < parametros.size()- 1; i++) {
+			int pos = i;
+
+			for (int j = i + 1; j <= parametros.size(); j++) {
+				if (darnumerodeInfracciones(parametros.get(j).darInfraccion(),parametros) < darnumerodeInfracciones(parametros.get(pos).darInfraccion(),parametros))
+					pos = j;
+
+
+				Comparendo min = parametros.get(pos);
+				parametros.set(i,min);
+				min = parametros.get(i);
+			}
+		}
+		int z = 0;
+		while(z < rank){
+			ranks[z] = darnumerodeInfracciones(parametros.get(z).darInfraccion(),parametros);
+			ranksTipo[z] = parametros.get(z).darInfraccion();
+			z++;
+			respuesta += ranksTipo[z] + ";" + ranks[z];
+		}
+
+		return respuesta;
+	}
+
+	public String imprimirTodo() {
+		// TODO Auto-generated method stub
+		String resp="";
+		for (int i = 0; i < elementos.length; i++) {
+			resp=resp +elementos[i]+"\n";
+		}
+		return resp;
+	}
 
 
 }

@@ -161,7 +161,7 @@ return "" + datos.imprimirTodo();
 	/** recorre los datos cargados en la cola y da el numero total de cuantos hay
 	 * @return numero de comparendos en la cola
 	 */
-	public int totalComparendosCola() {
+	public int totalComparendos() {
 		return datos.darTamano();
 
 	}
@@ -245,11 +245,11 @@ return "" + datos.imprimirTodo();
 	 *  * @return total de cada tipo de comparendos en las fechas fecha
 	 */
 	//parte A3
-	//	public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
-	//		
-	//		
-	//		return ""+datos.comparaComparendoCodigoSegunFechas(fecha1, fecha2);
-	//	}	
+		public String comparaComparendoCodigoSegunFechas(Date fecha1, Date fecha2) {
+			
+			
+			return ""+datos.comparaComparendoCodigoSegunFechas(fecha1, fecha2);
+		}	
 
 
 	/**
@@ -316,8 +316,8 @@ return "" + datos.imprimirTodo();
 	 * @return numero de comparendo dados por localidad en un peiodo de tiempo
 	 */
 	//parte C1
-	public String NumerodeComparendosCodigoSegunLocalidad(K pLocalidad, K fechaInicial, K fechaFinal ) {
-		return ""+datos.NumerodeComparendosCodigoSegunLocalidad(pLocalidad, fechaInicial, fechaFinal);
+	public String NumerodeComparendosCodigoSegunLocalidad(Date fechaInicial , Date fechaFinal , String pLocalidad ) {
+		return ""+datos.comparedosFechaFechaLocalidad(fechaInicial, fechaFinal, pLocalidad);
 
 	}
 
@@ -331,9 +331,9 @@ return "" + datos.imprimirTodo();
 	 * @return numero de comparendo mas frecuentes en un peiodo de tiempo
 	 */
 	//parte C2
-	public String consultarNComparendosMayoresSegunPeriodoFecha(K N ,K fechaInicial, K fechaFinal) {
+	public String consultarNComparendosMayoresSegunPeriodoFecha(int N ,Date fechaInicial, Date fechaFinal) {
 
-		return (String) datos.consultarNComparendosMayoresSegunPeriodoFecha(N, fechaInicial, fechaFinal);
+		return (String) datos.rankingDeInfractores(fechaInicial, fechaFinal, N);
 
 	}
 
@@ -349,7 +349,7 @@ return "" + datos.imprimirTodo();
 	//parte C3
 
 	public String GeneradorHistrogramaASCIINUmTotalSegunLocalidad() {
-		return ""+datos.GeneradorHistrogramaASCIINUmTotalSegunLocalidad();
+		return ""+datos.generarhistograma(datos.darlistaLocalidades());
 
 	}
 

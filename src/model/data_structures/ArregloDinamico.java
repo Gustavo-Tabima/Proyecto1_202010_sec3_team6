@@ -104,7 +104,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	@Override
 	public K buscar(K dato) {
 		boolean encontrado = false;
-		for(int i = 0; i<elementos.length && !encontrado; i++)
+		for(int i = 0; i<tamanoMax && !encontrado; i++)
 		{
 			if(elementos[i].equals(dato))
 			{
@@ -125,13 +125,13 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	@Override
 	public K eliminar(K dato) {
 
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			if(elementos[i].equals((K) dato))
 			{
 				K Y = (K) elementos[i];
 				elementos[i]=null;
 				System.out.println(elementos[i]+" Eliminado");
-				for (int j = i; j < elementos.length - 1; j++) {
+				for (int j = i; j < tamanoMax - 1; j++) {
 					elementos[j] = elementos[j+1];
 				}
 
@@ -154,7 +154,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 	public Comparendo consultarPrimerComparendoPorLocalidad(String Plocalidad) {
 
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			Comparendo act = elementos[i];
 			String X = act.darLocalidad();
 			if (X.equals(Plocalidad)) {
@@ -217,7 +217,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 
 
-		for (int i = 0; i <= elementos.length; i++) {
+		for (int i = 0; i <= tamanoMax; i++) {
 			Comparendo actual = elementos[i];
 			if(actual.darFecha().equals(fecha1)) {
 				listaFecha1.add(actual.darInfraccion());
@@ -295,7 +295,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	//parte B1
 	public Comparendo consultarPrimerComparendoPorInfraccion(String Pinfraccion) {
 
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			Comparendo act = elementos[i];
 
 			if (elementos[i].darInfraccion().contentEquals(Pinfraccion)) {
@@ -377,7 +377,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 
 
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			Comparendo actual = elementos[i];
 
 
@@ -437,7 +437,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	public ArrayList<Comparendo> arrayComparendofecha(K Pfecha) {
 		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
 
-		for (int j = 0; j < elementos.length; j++) {
+		for (int j = 0; j < tamanoMax; j++) {
 
 
 
@@ -496,7 +496,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	public ArrayList<Comparendo> arrayComparendoInfracc(K pInfracc) {
 		ArrayList<Comparendo> comparendoQueConcuerdan= new ArrayList();
 
-		for (int j = 0; j < elementos.length; j++) {
+		for (int j = 0; j < tamanoMax; j++) {
 			Comparendo act = elementos[j];
 
 			K X =(K) act.darInfraccion();
@@ -551,8 +551,8 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	public String mostrarMayorId() {
 		String respuesta = "";
 
-		int tam = elementos.length;
-		for (int i = 0; i < elementos.length; i++) {
+		int tam = tamanoMax;
+		for (int i = 0; i < tamanoMax; i++) {
 			int minInfrac = i; 
 			for (int j = i+1; j < tam; j++) 
 				if (elementos[j].darObjectId() < elementos[minInfrac].darObjectId()) 
@@ -593,8 +593,8 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	 */
 	public double darlowLong() {
 		double lowLong = elementos[0].darLongitud();
-		int tam = elementos.length;
-		for (int i = 0; i < elementos.length; i++) {
+		int tam = tamanoMax;
+		for (int i = 0; i < tamanoMax; i++) {
 			int minInfrac = i; 
 			for (int j = i+1; j < tam; j++) 
 				if (elementos[j].darLongitud()< elementos[minInfrac].darLongitud()) 
@@ -619,8 +619,8 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 	public double darlowLat() {
 		double lowlat = elementos[0].darLongitud();
-		int tam = elementos.length;
-		for (int i = 0; i < elementos.length; i++) {
+		int tam = tamanoMax;
+		for (int i = 0; i < tamanoMax; i++) {
 			int minInfrac = i; 
 			for (int j = i+1; j < tam; j++) 
 				if (elementos[j].darLatitud()< elementos[minInfrac].darLatitud()) 
@@ -641,8 +641,8 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	 */
 	public double darHlat() {
 		double hlat = elementos[0].darLatitud();
-		int tam = elementos.length;
-		for (int i = 0; i < elementos.length; i++) {
+		int tam = tamanoMax;
+		for (int i = 0; i < tamanoMax; i++) {
 			int minInfrac = i; 
 			for (int j = i+1; j < tam; j++) 
 				if (elementos[j].darLatitud()> elementos[minInfrac].darLatitud()) 
@@ -666,7 +666,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 		String respuesta = "";
 		int contador = 0;
 		ArrayList<Comparendo> parametros = new ArrayList<Comparendo>();
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			if(elementos[i].darFecha().compareTo(pini) == 0 && elementos[i].darFecha().compareTo(pfini) == -1  ||
 					elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == -1 ||
 					elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == 0) {
@@ -700,8 +700,8 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	 */
 	public double darHlong() {
 		double hlong = elementos[0].darLongitud();
-		int tam = elementos.length;
-		for (int i = 0; i < elementos.length; i++) {
+		int tam = tamanoMax;
+		for (int i = 0; i < tamanoMax; i++) {
 			int minInfrac = i; 
 			for (int j = i+1; j < tam; j++) 
 				if (elementos[j].darLongitud()> elementos[minInfrac].darLongitud()) 
@@ -748,7 +748,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 	public int darRepeticionesLocal(String local) {
 		int reps = 0;
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			if(elementos[i].darLocalidad().equals(local)) {
 				reps++;
 			}
@@ -760,7 +760,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	}
 	public int contadordeInfraccionesPorLocalidad(){
 		int numero = 0;
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			if(elementos[i].darLocalidad().equals(darlistaLocalidades().get(i))){
 
 			}
@@ -772,7 +772,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	public ArrayList<String> darlistaLocalidades(){
 		ArrayList<String> lista = new ArrayList<>();
 
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			if(NoestaRepetida(elementos[i].darLocalidad(),lista)){
 				lista.add(elementos[i].darLocalidad());
 			}
@@ -798,7 +798,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 
 		int contador = 0;
 		ArrayList<Comparendo> parametros = new ArrayList<Comparendo>();
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			if(elementos[i].darFecha().compareTo(pini) == 0 && elementos[i].darFecha().compareTo(pfini) == -1  ||
 					elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == -1 ||
 					elementos[i].darFecha().compareTo(pini) == 1 || elementos[i].darFecha().compareTo(pfini) == 0) {
@@ -839,7 +839,7 @@ public class ArregloDinamico <K> implements IArregloDinamico<K> {
 	public String imprimirTodo() {
 		// TODO Auto-generated method stub
 		String resp="";
-		for (int i = 0; i < elementos.length; i++) {
+		for (int i = 0; i < tamanoMax; i++) {
 			resp=resp +elementos[i]+"\n";
 		}
 		return resp;

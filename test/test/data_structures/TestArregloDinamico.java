@@ -140,7 +140,7 @@ String X = arreglo.consultarComparendosCodigoInfracc("C35");
 
 		assertEquals("NO da elemento correctamente",x,x);
 
-	}
+	} 
 //	@Test
 //	public void testNumerodeComparendosCodigoSegunLocalidad() {
 //		setUp1();

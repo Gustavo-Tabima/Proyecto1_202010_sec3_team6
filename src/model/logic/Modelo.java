@@ -349,7 +349,18 @@ return "" + datos.imprimirTodo();
 	//parte C3
 
 	public String GeneradorHistrogramaASCIINUmTotalSegunLocalidad() {
-		return ""+datos.generarhistograma(datos.darlistaLocalidades());
+		int i = 0;
+		String r ="";
+	while(i<20){
+		try {
+		r = ""+datos.generarhistograma(datos.darlistaLocalidades())+"\n";
+		return r;
+		} catch (Exception e) {
+			
+		}
+		i++;
+	}
+	return r;	
 
 	}
 

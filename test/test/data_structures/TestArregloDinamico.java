@@ -101,7 +101,7 @@ public class TestArregloDinamico<K> {
 	public void testConsultarComparendosFecha() {
 		setUp1();
 		String x = arreglo.consultarComparendosFecha(fevcha);
-		assertEquals("NO da lo esperado",x,0);
+		assertEquals("NO da lo esperado",x,2);
 
 	}
 	@Test
@@ -110,7 +110,7 @@ public class TestArregloDinamico<K> {
 		setUp1();
 		 arreglo.comparaComparendoCodigoSegunFechas(fevcha, fevcha2);
 
-		assertEquals("NO da lo esperado",arreglo.comparaComparendoCodigoSegunFechas(fevcha, fevcha2),"hola");
+		assertEquals("NO da lo esperado",arreglo.comparaComparendoCodigoSegunFechas(fevcha, fevcha2),"C35| 1 | 1 ");
 
 	
 	}
@@ -128,7 +128,7 @@ public class TestArregloDinamico<K> {
 	public void testconsultarComparendosCodigoInfracc() {
 		setUp1();
 		
-String X = arreglo.consultarComparendosCodigoInfracc("635");
+String X = arreglo.consultarComparendosCodigoInfracc("C35");
 		assertEquals("NO da resultado esperado",X,1);
 
 	}
